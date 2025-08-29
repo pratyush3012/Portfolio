@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Pratyush Sharma — AI Researcher and Data Researcher portfolio with 3D liquid glass visuals.">
+<meta name="author" content="Pratyush Sharma">
+<meta property="og:title" content="Pratyush Sharma — Portfolio">
+<meta property="og:description" content="AI Researcher | Tech Enthusiast | Data Researcher">
+<meta property="og:type" content="website">
+<meta property="og:image" content="background.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Pratyush Sharma — Portfolio">
+<meta name="twitter:description" content="AI Researcher | Tech Enthusiast | Data Researcher">
+<title>Pratyush Sharma — Liquid Glass 3D Portfolio</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+<link rel="icon" href="avtar.png">
+<script src="https://unpkg.com/three@0.160.0/build/three.min.js" defer></script>
+<style>
+:root{
+  --bg-color:#0b1220;
+  --panel:rgba(255,255,255,0.08);
+  --panel-2:rgba(255,255,255,0.05);
+  --text:#fff;
+  --muted:rgba(255,255,255,0.6);
+  --accent1:#00d6ff;
+  --accent2:#8f6cff;
+  --radius:18px;
+  --blur:24px;
+  --border-glass:rgba(255,255,255,0.15);
+  --shadow-soft:0 20px 60px rgba(12,18,30,0.06);
+  --transition-speed:0.3s;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{height:100%;font-family:Inter,system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial;background:var(--bg-color);color:var(--text);overflow-x:hidden;}
+a{text-decoration:none;color:inherit;}
+
+/* UX */
+html{scroll-behavior:smooth;}
+.section{scroll-margin-top: 90px;}
+
+#stage{position:fixed;inset:0;z-index:0;overflow:hidden;}
+.bg-img{position:absolute;inset:0;z-index:0;background-size:cover;background-position:center;filter:saturate(1.05) contrast(1.05);transition:transform 0.1s ease-out;}
+#bgCanvas{position:absolute;inset:0;z-index:1;pointer-events:none;width:100%;height:100%;}
+.bg-overlay{position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(180deg, rgba(11,18,32,0.2), rgba(11,18,32,0.1));mix-blend-mode: overlay;}
+
+/* iOS 26 style nav bar */
+.nav{
+  position:fixed;top:20px;left:50%;transform:translateX(-50%);
+  z-index:10;display:flex;gap:10px;padding:8px 16px;
+  border-radius:999px;background:rgba(255,255,255,0.02);
+  border:1px solid rgba(255,255,255,0.05);
+  backdrop-filter: blur(10px) saturate(1.05);
+  transition:all 0.4s ease;
+}
+.nav.active, .nav:hover{
+  background:rgba(255,255,255,0.15);
+  border:1px solid rgba(255,255,255,0.2);
+  box-shadow:0 20px 40px rgba(0,0,0,0.1);
+}
+.nav a{font-weight:700;padding:6px 12px;transition:0.2s;color:rgba(255,255,255,0.85);}
+.nav a:hover{color:var(--accent2);transform:translateY(-2px);}
+
+/* Layout */
+.wrap{position:relative;z-index:4;max-width:1200px;margin:40px auto;padding:16px;display:grid;grid-template-columns:1fr 380px;gap:40px;align-items:start;}
+@media (max-width:980px){.wrap{grid-template-columns:1fr;gap:32px;padding:12px;}}
+
+/* Panels */
+.panel{position:relative;overflow:hidden;border-radius:var(--radius);
+background:linear-gradient(180deg,var(--panel), var(--panel-2));
+border:1px solid var(--border-glass);
+box-shadow: var(--shadow-soft);
+backdrop-filter: blur(var(--blur)) saturate(1.05);
+transition: transform var(--transition-speed) cubic-bezier(.2,.9,.2,1), box-shadow var(--transition-speed) ease;}
+.panel::before{
+  content:"";position:absolute;inset:0;background:linear-gradient(120deg, rgba(255,255,255,0.2), rgba(255,255,255,0.05), rgba(255,255,255,0.2));
+  transform:translateX(-100%);pointer-events:none;z-index:2;
+  animation: sheenMove 3s infinite linear;
+  mix-blend-mode: overlay;border-radius:inherit;
+}
+@keyframes sheenMove{
+  0%{transform:translateX(-100%) rotate(25deg);}
+  100%{transform:translateX(200%) rotate(25deg);}
+}
+
+/* Hero, avatar */
+.hero{display:flex;gap:32px;align-items:center;perspective:1500px;}
+.hero-left{flex:1;display:flex;flex-direction:column;gap:16px;transform-style: preserve-3d;position:relative;}
+.hero-right{display:flex;align-items:center;justify-content:center;}
+.name{font-size:48px;font-weight:900;color:#fff;line-height:1;position:relative;overflow:hidden;}
+.name .accent{background:linear-gradient(90deg,var(--accent1),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent;display:inline-block;position:relative;}
+.name .accent::after{content:"";position:absolute;inset:0;background:linear-gradient(120deg, rgba(255,255,255,0.3), rgba(255,255,255,0));transform:translateX(-100%);animation:sheenMove 2.5s infinite linear;mix-blend-mode: overlay;}
+.subtitle{color:var(--accent2);font-weight:700;}
+.desc{color:var(--muted);line-height:1.5;max-width:100%;position:relative;}
+.actions{display:flex;gap:12px;margin-top:18px;flex-wrap:wrap;}
+.btn{padding:10px 16px;border-radius:14px;font-weight:700;font-size:14px;cursor:pointer;border:1px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.05);color:#fff;display:inline-flex;gap:10px;align-items:center;transition:0.2s;position:relative;overflow:hidden;}
+.btn::before{content:"";position:absolute;inset:0;background:linear-gradient(120deg, rgba(255,255,255,0.2), rgba(255,255,255,0.05), rgba(255,255,255,0.2));transform:translateX(-100%);pointer-events:none;z-index:1;animation: sheenMove 3s infinite linear;mix-blend-mode: overlay;}
+.btn.primary{background: linear-gradient(90deg, rgba(0,214,255,0.12), rgba(140,82,255,0.08));border:1px solid rgba(0,214,255,0.18);box-shadow:0 16px 36px rgba(0,214,255,0.06);}
+.btn:hover{transform:translateY(-3px) scale(1.05);}
+
+.avatar{width:200px;height:200px;border-radius:50%;overflow:hidden;display:flex;align-items:center;justify-content:center;border:2px solid rgba(255,255,255,0.1);background: rgba(255,255,255,0.05);backdrop-filter: blur(24px) saturate(1.05);transition: transform 0.25s ease;box-shadow: 0 20px 60px rgba(12,18,30,0.06);}
+.avatar img{width:100%;height:100%;object-fit:cover;border-radius:50%;}
+
+/* Sections */
+.section{margin-top:24px;padding:16px;transform-style: preserve-3d;position:relative;}
+#experience{margin-top:16px;} /* tighter spacing */
+.hdr{display:flex;justify-content:space-between;align-items:center;gap:12px;}
+.hdr h2{margin:0;font-size:18px;font-weight:900;color:#fff;}
+.hdr small{color:var(--muted);font-weight:700;}
+.skills{margin-top:12px;display:flex;gap:10px;flex-wrap:wrap;}
+.skill{padding:8px 12px;border-radius:999px;font-weight:800;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);box-shadow:0 10px 24px rgba(12,18,30,0.02);color:#fff;transition:transform 0.25s ease;}
+.skill:hover{transform:translateZ(8px) scale(1.05);}
+.projects{display:grid;grid-template-columns: repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-top:12px;}
+.project{padding:14px;border-radius:14px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:#fff;transition: transform 0.25s cubic-bezier(.2,.9,.2,1);cursor:pointer;position:relative;}
+.project:hover{transform: translateZ(10px) rotateX(2deg) rotateY(2deg);box-shadow:0 28px 64px rgba(12,18,30,0.1);}
+.timeline{margin-top:12px;display:flex;flex-direction:column;gap:10px;transform-style: preserve-3d;}
+.item{display:flex;gap:12px;align-items:flex-start;}
+.dot{width:12px;height:12px;border-radius:50%;background: linear-gradient(90deg,var(--accent1),var(--accent2));box-shadow: 0 14px 36px rgba(140,82,255,0.2);margin-top:6px;}
+.meta{padding:12px;border-radius:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);flex:1;color:#fff;transition: transform 0.25s ease;}
+.meta:hover{transform:translateZ(8px);}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce){
+  *{animation:none !important; transition:none !important;}
+  .panel, .nav, .avatar, .bg-img{transform:none !important;}
+}
+</style>
+</head>
+<body>
+
+<div id="stage">
+  <div class="bg-img" style="background-image:url('background.jpg')"></div>
+  <canvas id="bgCanvas"></canvas>
+  <div class="bg-overlay"></div>
+</div>
+
+<nav class="nav" aria-label="Primary">
+  <a href="#hero">Home</a>
+  <a href="#education">Education</a>
+  <a href="#experience">Experience</a>
+  <a href="#projects">Projects</a>
+  <a href="#skills">Skills</a>
+</nav>
+
+<div class="wrap">
+
+  <!-- Hero -->
+  <div class="hero" id="hero">
+    <div class="hero-left panel">
+      <h1 class="name">Pratyush <span class="accent">Sharma</span></h1>
+      <div class="subtitle">AI Researcher | Tech Enthusiast | Data Researcher</div>
+      <p class="desc">Passionate about artificial intelligence, programming, and creative technology. Currently working as a Data Researcher at CollegeDunia while pursuing BCA from IGNOU. Strong interest in AI tools, content workflows, and programming with a vision to integrate technology into real-world problem solving.</p>
+      <div class="actions">
+        <a class="btn primary" href="mailto:pratyushsharma1209@gmail.com">Email</a>
+        <a class="btn" href="https://www.linkedin.com/in/pratyush-sharma-931786252/">LinkedIn</a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="avatar">
+        <img src="avtar.png" alt="Pratyush Sharma" width="200" height="200" fetchpriority="high">
+      </div>
+    </div>
+  </div>
+
+  <!-- Education -->
+  <div class="section panel" id="education">
+    <div class="hdr"><h2>Education</h2></div>
+    <div class="timeline">
+      <div class="item"><div class="dot"></div><div class="meta"><strong>Bachelor of Computer Applications (BCA)</strong> — IGNOU (Online) (Pursuing – 2025)<br>Studying computer applications with a focus on programming and emerging technologies.</div></div>
+      <div class="item"><div class="dot"></div><div class="meta"><strong>B.Tech (Dropped after 1st Year)</strong> — Engineering Program (2022 – 2023)<br>Explored core engineering concepts before shifting focus to computer applications.</div></div>
+      <div class="item"><div class="dot"></div><div class="meta"><strong>Class XII – Science (Non-Medical)</strong> — CRPF Public School, Dwarka (CBSE) (2022)<br>Graduated with 75% in Physics, Chemistry, Mathematics stream.</div></div>
+    </div>
+  </div>
+
+  <!-- Experience -->
+  <div class="section panel" id="experience">
+    <div class="hdr"><h2>Experience</h2></div>
+    <div class="timeline">
+      <div class="item"><div class="dot"></div><div class="meta"><strong>Data Researcher</strong> — CollegeDunia (2025 – Present)<br>Conducting structured research on universities and academic programs; managing large datasets.</div></div>
+      <div class="item"><div class="dot"></div><div class="meta"><strong>Sales Associate</strong> — Classpanda (2024 – 2025)<br>Handled student sales inquiries and guided enrollment processes.</div></div>
+      <div class="item"><div class="dot"></div><div class="meta"><strong>Chat Process Executive</strong> — Macy’s (Concentrix) (2024)<br>Resolved customer queries via chat support, ensuring client satisfaction and timely responses.</div></div>
+      <div class="item"><div class="dot"></div><div class="meta"><strong>Sales Advisor</strong> — Policy Bazaar (2024)<br>Advised customers on insurance products, boosting conversions and handling objections.</div></div>
+      <div class="item"><div class="dot"></div><div class="meta"><strong>Content Writer</strong> — Sportskeeda (2023)<br>Authored sports-related articles optimized for SEO and engagement.</div></div>
+    </div>
+  </div>
+
+  <!-- Projects -->
+  <div class="section panel" id="projects">
+    <div class="hdr"><h2>Projects</h2></div>
+    <div class="projects">
+      <div class="project"><strong>Freelance Video Editing</strong><br>Edited YouTube content for multiple creators. Delivered professional-quality videos with creative storytelling, transitions, and AI-assisted editing tools.</div>
+    </div>
+  </div>
+
+  <!-- Skills -->
+  <div class="section panel" id="skills">
+    <div class="hdr"><h2>Skills</h2></div>
+    <div class="skills">
+      <div class="skill">Python</div>
+      <div class="skill">AI Tools & APIs (OpenAI, Stable Diffusion)</div>
+      <div class="skill">Data Research & Analysis</div>
+      <div class="skill">Content Writing</div>
+      <div class="skill">Video Editing (Premiere Pro, CapCut, AI-based tools)</div>
+      <div class="skill">Sales & Communication</div>
+      <div class="skill">Git & GitHub</div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// 3D Tilt for panels
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+document.querySelectorAll('.panel').forEach(panel=>{
+  if(prefersReducedMotion) return;
+  panel.addEventListener('mousemove', e=>{
+    const rect = panel.getBoundingClientRect();
+    const x = e.clientX - rect.left - rect.width/2;
+    const y = e.clientY - rect.top - rect.height/2;
+    panel.style.transform = `rotateY(${x/25}deg) rotateX(${-y/25}deg)`;
+  });
+  panel.addEventListener('mouseleave', ()=>{panel.style.transform=`rotateY(0deg) rotateX(0deg)`;});
+});
+
+// Avatar tilt + subtle pulse
+const avatar = document.querySelector('.avatar');
+if(!prefersReducedMotion){
+document.addEventListener('mousemove', e=>{
+  const rect = avatar.getBoundingClientRect();
+  const x = e.clientX - rect.left - rect.width/2;
+  const y = e.clientY - rect.top - rect.height/2;
+  avatar.style.transform = `rotateY(${x/35}deg) rotateX(${-y/35}deg) scale(${1+Math.sin(Date.now()*0.003)*0.02})`;
+});
+}
+
+// Nav 3D subtle tilt
+const nav = document.querySelector('.nav');
+if(!prefersReducedMotion){
+nav.addEventListener('mousemove', e => {
+  const rect = nav.getBoundingClientRect();
+  const x = e.clientX - rect.left - rect.width/2;
+  const y = e.clientY - rect.top - rect.height/2;
+  nav.style.transform = `translateX(-50%) translateY(${y/20}px) rotateX(${-y/40}deg) rotateY(${x/40}deg)`;
+});
+nav.addEventListener('mouseleave', ()=> nav.style.transform=`translateX(-50%)`);
+}
+
+// Background image parallax
+const bg = document.querySelector('.bg-img');
+if(!prefersReducedMotion){
+document.addEventListener('mousemove', e=>{
+  const x = (e.clientX/window.innerWidth - 0.5)*10;
+  const y = (e.clientY/window.innerHeight - 0.5)*10;
+  bg.style.transform = `translate3d(${x}px, ${y}px,0)`;
+});
+}
+
+// Three.js Liquid Blobs with mouse + gyro
+const canvas = document.getElementById('bgCanvas');
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight,0.1,1000);
+const renderer = new THREE.WebGLRenderer({canvas, alpha:true, antialias:true});
+renderer.setSize(window.innerWidth,window.innerHeight);
+renderer.setPixelRatio(window.devicePixelRatio);
+camera.position.z = 60;
+
+const ambientLight = new THREE.AmbientLight(0xffffff,0.15); scene.add(ambientLight);
+const directionalLight = new THREE.DirectionalLight(0xffffff,0.5); directionalLight.position.set(30,50,50); scene.add(directionalLight);
+
+const blobs = [];
+for(let i=0;i<7;i++){
+  const geo=new THREE.SphereGeometry(6,32,32);
+  const mat=new THREE.MeshStandardMaterial({color:0x8c52ff, transparent:true, opacity:0.12, roughness:0.5, metalness:0.2});
+  const mesh=new THREE.Mesh(geo,mat);
+  mesh.position.set(Math.random()*70-35,Math.random()*50-25,Math.random()*-30);
+  mesh.scale.setScalar(Math.random()*0.7+0.6);
+  scene.add(mesh);
+  blobs.push(mesh);
+}
+
+let mouse={x:0,y:0},gyro={x:0,y:0};
+if(!prefersReducedMotion){
+document.addEventListener('mousemove', e=>{ mouse.x=(e.clientX/window.innerWidth-0.5)*2; mouse.y=(e.clientY/window.innerHeight-0.5)*2; });
+}
+if(window.DeviceOrientationEvent){
+  window.addEventListener('deviceorientation', event=>{
+    let gamma=event.gamma||0; let beta=event.beta||0;
+    gyro.x=Math.max(-1,Math.min(1,gamma/45));
+    gyro.y=Math.max(-1,Math.min(1,beta/45));
+  }, true);
+}
+
+let runAnimation = !prefersReducedMotion;
+function animateBlobs(){
+  if(!runAnimation) return;
+  requestAnimationFrame(animateBlobs);
+  blobs.forEach((b,i)=>{
+    const infX=mouse.x*0.9+gyro.x*0.9;
+    const infY=mouse.y*0.9+gyro.y*0.9;
+    b.rotation.x+=0.005+i*0.001+infY*0.05;
+    b.rotation.y+=0.005+i*0.001+infX*0.05;
+  });
+  renderer.render(scene,camera);
+}
+if(runAnimation){
+  animateBlobs();
+}else{
+  renderer.render(scene,camera);
+}
+
+document.addEventListener('visibilitychange',()=>{
+  const shouldRun = !document.hidden && !prefersReducedMotion;
+  if(shouldRun && !runAnimation){ runAnimation = true; animateBlobs(); }
+  if(!shouldRun){ runAnimation = false; }
+});
+
+window.addEventListener('resize',()=>{
+  camera.aspect = window.innerWidth/window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth,window.innerHeight);
+});
+</script>
+
+</body>
+</html>

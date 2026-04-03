@@ -111,31 +111,8 @@ const $$ = sel => document.querySelectorAll(sel);
 })();
 
 /* ============================================================
-   TYPED TEXT
+   TYPED TEXT  (removed — hero desc is now static)
    ============================================================ */
-(function initTyped() {
-  const phrases = [
-    'I craft engaging content, visuals, and digital experiences.',
-    'I turn ideas into stories that people actually remember.',
-    'I build brands that feel real, bold, and unforgettable.'
-  ];
-  let pi = 0, ci = 0, deleting = false;
-  const el = $('typedText');
-
-  function tick() {
-    const cur = phrases[pi];
-    if (deleting) {
-      el.textContent = cur.slice(0, --ci);
-      if (ci < 0) { deleting = false; pi = (pi + 1) % phrases.length; setTimeout(tick, 500); return; }
-      setTimeout(tick, 35);
-    } else {
-      el.textContent = cur.slice(0, ++ci);
-      if (ci > cur.length) { deleting = true; setTimeout(tick, 2200); return; }
-      setTimeout(tick, 55);
-    }
-  }
-  setTimeout(tick, 1600);
-})();
 
 /* ============================================================
    HERO PARALLAX  (debounced)
@@ -294,36 +271,6 @@ const $$ = sel => document.querySelectorAll(sel);
       });
     });
   });
-})();
-
-/* ============================================================
-   SHOWCASE LIGHTBOX
-   ============================================================ */
-(function initLightbox() {
-  const lb = $('lightbox');
-  const overlay = $('lightboxOverlay');
-  const closeBtn = $('lightboxClose');
-  const img = $('lightboxImg');
-  const title = $('lightboxTitle');
-  const desc = $('lightboxDesc');
-
-  $$('.masonry-item').forEach(item => {
-    item.addEventListener('click', () => {
-      const bg = item.querySelector('.masonry-bg');
-      const c1 = bg.style.getPropertyValue('--c1');
-      const c2 = bg.style.getPropertyValue('--c2');
-      img.style.background = `linear-gradient(135deg, ${c1}, ${c2})`;
-      title.textContent = item.dataset.title || '';
-      desc.textContent = item.dataset.desc || '';
-      lb.classList.add('open');
-      document.body.style.overflow = 'hidden';
-    });
-  });
-
-  function close() { lb.classList.remove('open'); document.body.style.overflow = ''; }
-  overlay.addEventListener('click', close);
-  closeBtn.addEventListener('click', close);
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
 })();
 
 /* ============================================================

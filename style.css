@@ -359,16 +359,30 @@ body.cursor-hover .cursor-follower { width: 52px; height: 52px; border-color: rg
 }
 
 .orbit-center {
-  position: absolute; width: 110px; height: 110px;
+  position: absolute; width: 120px; height: 120px;
   border-radius: 50%; overflow: hidden;
   top: 50%; left: 50%; transform: translate(-50%, -50%);
   z-index: 3;
   border: 2px solid rgba(124,58,237,0.5);
-  box-shadow: 0 0 30px rgba(124,58,237,0.25);
-  background: var(--gradient);
-  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 0 20px rgba(124,58,237,0.3), 0 0 60px rgba(124,58,237,0.15);
+  background: #111;
 }
-.profile-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+/* Pulsing ring */
+.orbit-center::before {
+  content: ''; position: absolute; inset: -4px; border-radius: 50%;
+  border: 1px solid rgba(124,58,237,0.3);
+  animation: pulseRing 3s ease-in-out infinite; pointer-events: none;
+}
+@keyframes pulseRing {
+  0%,100% { transform: scale(1);   opacity: 0.6; }
+  50%      { transform: scale(1.1); opacity: 0.2; }
+}
+.profile-img {
+  width: 100%; height: 100%; object-fit: cover;
+  object-position: center top; display: block;
+  transition: transform 0.4s var(--ease);
+}
+.orbit-center:hover .profile-img { transform: scale(1.05); }
 .orbit-initials {
   display: none; align-items: center; justify-content: center;
   width: 100%; height: 100%;

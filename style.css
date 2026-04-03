@@ -863,3 +863,24 @@ body.cursor-hover .cursor-follower { width: 52px; height: 52px; border-color: rg
   .hero-image { animation: none !important; }
   .hero-image::before { display: none; }
 }
+
+/* ============================================================
+   GSAP OVERRIDES
+   When GSAP is loaded it handles opacity/transform directly.
+   Keep reveal classes as fallback only.
+   ============================================================ */
+.gsap-active .reveal-up,
+.gsap-active .reveal-right {
+  opacity: 1; transform: none;
+}
+
+/* Hero elements — GSAP sets from: values, so start visible */
+.availability-badge,
+.hero-title,
+#heroRole,
+.hero-desc,
+.hero-buttons,
+#heroImageWrap,
+#heroScroll {
+  opacity: 1; transform: none;
+}

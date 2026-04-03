@@ -542,7 +542,7 @@ body.cursor-hover .cursor-follower { width: 52px; height: 52px; border-color: rg
   transition: border-color var(--dur) var(--ease), transform var(--dur) var(--ease);
   position: relative; cursor: pointer;
 }
-.contact-link:hover { border-color: rgba(124,58,237,0.4); transform: translateX(4px); }
+.contact-link:hover { border-color: rgba(124,58,237,0.5); transform: translateX(6px); }
 .contact-icon { font-size: 1.4rem; flex-shrink: 0; }
 .contact-link small { color: var(--muted); font-size: 0.72rem; display: block; margin-bottom: 0.15rem; }
 .contact-link p { font-weight: 500; font-size: 0.9rem; }

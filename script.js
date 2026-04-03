@@ -194,21 +194,23 @@ const $$ = sel => document.querySelectorAll(sel);
 })();
 
 /* ============================================================
-   COUNTER ANIMATION
+   COUNTER ANIMATION  (staggered)
    ============================================================ */
 (function initCounters() {
   const obs = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (!entry.isIntersecting) return;
-      entry.target.querySelectorAll('.stat-num').forEach(el => {
-        const target = parseInt(el.dataset.target);
-        let cur = 0;
-        const step = target / 55;
-        const t = setInterval(() => {
-          cur = Math.min(cur + step, target);
-          el.textContent = Math.floor(cur);
-          if (cur >= target) clearInterval(t);
-        }, 22);
+      entry.target.querySelectorAll('.stat-num').forEach((el, i) => {
+        setTimeout(() => {
+          const target = parseInt(el.dataset.target);
+          let cur = 0;
+          const step = target / 55;
+          const t = setInterval(() => {
+            cur = Math.min(cur + step, target);
+            el.textContent = Math.floor(cur);
+            if (cur >= target) clearInterval(t);
+          }, 22);
+        }, i * 200);
       });
       obs.unobserve(entry.target);
     });
@@ -231,6 +233,16 @@ const $$ = sel => document.querySelectorAll(sel);
       card.style.transform = `perspective(700px) rotateY(${x * 8}deg) rotateX(${-y * 8}deg) translateY(-4px)`;
     });
     card.addEventListener('mouseleave', () => { card.style.transform = ''; });
+  });
+})();
+
+/* ============================================================
+   ORBITAL RANDOM SPEEDS
+   ============================================================ */
+(function initOrbits() {
+  $$('.orbit').forEach(orbit => {
+    const speed = Math.random() * 16 + 10; // 10–26s
+    orbit.style.animationDuration = speed + 's';
   });
 })();
 

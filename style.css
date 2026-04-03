@@ -148,7 +148,7 @@ body.cursor-hover .cursor-follower { width: 52px; height: 52px; border-color: rg
 /* Single background: two large blurred blobs */
 .hero-blob {
   position: absolute; border-radius: 50%; pointer-events: none;
-  filter: blur(120px); opacity: 0.18;
+  filter: blur(120px); opacity: 0.13;
   width: 700px; height: 700px;
   background: radial-gradient(circle, #7c3aed, #2563eb);
   top: 50%; left: 50%; transform: translate(-60%, -55%);
@@ -158,7 +158,7 @@ body.cursor-hover .cursor-follower { width: 52px; height: 52px; border-color: rg
   width: 500px; height: 500px;
   background: radial-gradient(circle, #ec4899, #7c3aed);
   transform: translate(-30%, -40%);
-  animation-delay: -6s; opacity: 0.12;
+  animation-delay: -6s; opacity: 0.08;
 }
 @keyframes blobDrift {
   from { transform: translate(-60%, -55%) scale(1); }
@@ -295,7 +295,7 @@ body.cursor-hover .cursor-follower { width: 52px; height: 52px; border-color: rg
    ABOUT
    ============================================================ */
 .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; }
-.about-desc { color: var(--muted); line-height: 1.85; margin-bottom: 1.4rem; font-size: 1rem; }
+.about-desc { color: var(--muted); line-height: 1.85; margin-bottom: 1.4rem; font-size: 1rem; max-width: 520px; }
 .about-stats { display: flex; gap: 2.5rem; margin-top: 2.5rem; }
 .stat-row { display: flex; align-items: baseline; gap: 2px; }
 .stat-num {
@@ -314,10 +314,10 @@ body.cursor-hover .cursor-follower { width: 52px; height: 52px; border-color: rg
   display: flex; flex-direction: column; align-items: center; gap: 2rem;
   transition: transform 0.5s var(--ease), border-color 0.5s var(--ease), box-shadow 0.5s var(--ease);
 }
-.about-card:hover { border-color: rgba(124,58,237,0.3); box-shadow: 0 0 60px rgba(124,58,237,0.1); }
+.about-card:hover { border-color: rgba(124,58,237,0.3); box-shadow: 0 0 40px rgba(124,58,237,0.07); }
 .about-card__glow {
   position: absolute; inset: 0; border-radius: 24px; pointer-events: none;
-  background: radial-gradient(circle at 50% 0%, rgba(124,58,237,0.12), transparent 65%);
+  background: radial-gradient(circle at 50% 0%, rgba(124,58,237,0.08), transparent 65%);
 }
 .about-avatar {
   width: 110px; height: 110px; border-radius: 50%;
@@ -343,6 +343,51 @@ body.cursor-hover .cursor-follower { width: 52px; height: 52px; border-color: rg
 .tag-3 { bottom: 18%; left: -16%; animation-delay: 1.2s; }
 .tag-4 { bottom: 18%; right: -16%; animation-delay: 1.8s; }
 @keyframes floatTag { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-7px)} }
+
+/* ============================================================
+   ORBITAL SYSTEM
+   ============================================================ */
+.orbital-system {
+  position: relative; width: 300px; height: 300px;
+  display: flex; align-items: center; justify-content: center;
+}
+
+.orbit-center {
+  position: absolute; width: 110px; height: 110px;
+  border-radius: 50%; overflow: hidden; z-index: 2;
+  border: 2px solid rgba(124,58,237,0.35);
+  background: var(--gradient);
+  display: flex; align-items: center; justify-content: center;
+}
+.profile-img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.orbit-initials {
+  display: none; align-items: center; justify-content: center;
+  width: 100%; height: 100%;
+  font-size: 2rem; font-weight: 900; color: var(--text);
+}
+
+.orbit {
+  position: absolute; border: 1px dashed rgba(255,255,255,0.07);
+  border-radius: 50%; animation: rotateOrbit linear infinite;
+}
+.orbit-1 { width: 170px; height: 170px; }
+.orbit-2 { width: 210px; height: 210px; }
+.orbit-3 { width: 255px; height: 255px; }
+.orbit-4 { width: 300px; height: 300px; }
+
+.orbit-item {
+  position: absolute; top: -11px; left: 50%;
+  transform: translateX(-50%);
+  padding: 0.35rem 0.85rem; border-radius: 50px;
+  background: rgba(11,11,15,0.85); border: 1px solid rgba(255,255,255,0.1);
+  font-size: 0.72rem; font-weight: 600; backdrop-filter: blur(10px);
+  white-space: nowrap; color: var(--text);
+}
+
+@keyframes rotateOrbit {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
 
 /* ============================================================
    SKILLS

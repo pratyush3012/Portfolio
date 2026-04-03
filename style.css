@@ -344,7 +344,7 @@ body.cursor-hover .cursor-follower { width: 52px; height: 52px; border-color: rg
   position: relative; overflow: visible;
   display: flex; flex-direction: column; align-items: center; gap: 1.5rem;
   transform: scale(0.92); transform-origin: right center;
-  max-width: 420px; margin-left: auto;
+  max-width: 480px; margin-left: auto;
   transition: border-color 0.5s var(--ease), box-shadow 0.5s var(--ease);
 }
 .about-card:hover { border-color: rgba(124,58,237,0.3); box-shadow: 0 0 40px rgba(124,58,237,0.07); }
@@ -387,10 +387,10 @@ body.cursor-hover .cursor-follower { width: 52px; height: 52px; border-color: rg
 @keyframes floatTag { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-7px)} }
 
 /* ============================================================
-   ORBITAL SYSTEM  (math-based, readable labels)
+   ORBITAL SYSTEM
    ============================================================ */
 .orbital-system {
-  position: relative; width: 320px; height: 320px;
+  position: relative; width: 420px; height: 420px;
 }
 .orbital-system::before {
   content: ''; position: absolute; inset: 0; border-radius: 50%;
@@ -398,8 +398,9 @@ body.cursor-hover .cursor-follower { width: 52px; height: 52px; border-color: rg
   filter: blur(40px); pointer-events: none;
 }
 
+/* Center photo */
 .orbit-center {
-  position: absolute; width: 140px; height: 140px;
+  position: absolute; width: 160px; height: 160px;
   border-radius: 50%; overflow: hidden;
   top: 50%; left: 50%; transform: translate(-50%, -50%);
   z-index: 3;
@@ -409,7 +410,7 @@ body.cursor-hover .cursor-follower { width: 52px; height: 52px; border-color: rg
   display: flex; align-items: center; justify-content: center;
 }
 .orbit-center::before {
-  content: ''; position: absolute; inset: -4px; border-radius: 50%;
+  content: ''; position: absolute; inset: -5px; border-radius: 50%;
   border: 1px solid rgba(124,58,237,0.3);
   animation: pulseRing 3s ease-in-out infinite; pointer-events: none;
 }
@@ -429,31 +430,41 @@ body.cursor-hover .cursor-follower { width: 52px; height: 52px; border-color: rg
   font-size: 2rem; font-weight: 900; color: var(--text);
 }
 
+/*
+  The ring spins forward.
+  Each node is placed at its angle via transform on the ring,
+  then the label spins BACKWARD at the same speed → stays upright.
+*/
 .orbit {
   position: absolute; width: 100%; height: 100%;
-  animation: orbitSpin 20s linear infinite;
+  animation: orbitFwd 20s linear infinite;
 }
 
 .orbit-node {
   position: absolute; top: 50%; left: 50%;
-  transform:
-    rotate(var(--angle))
-    translateY(-140px)
-    rotate(calc(-1 * var(--angle)));
+  /* place each node at its angle, push out 170px from center */
+  transform: rotate(var(--angle)) translateY(-170px);
 }
 
+/* Label cancels the ring rotation by spinning backward */
 .orbit-label {
-  display: inline-block; padding: 5px 12px; border-radius: 999px;
+  display: inline-block; padding: 5px 13px; border-radius: 999px;
   font-size: 0.7rem; font-weight: 500; white-space: nowrap;
-  max-width: 140px; text-align: center;
-  background: rgba(11,11,15,0.85); border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(11,11,15,0.88); border: 1px solid rgba(255,255,255,0.12);
   backdrop-filter: blur(8px); color: var(--text);
+  /* center the label on the node point */
   transform: translate(-50%, -50%);
+  /* spin backward at same speed to stay upright */
+  animation: orbitBwd 20s linear infinite;
 }
 
-@keyframes orbitSpin {
+@keyframes orbitFwd {
   from { transform: rotate(0deg); }
   to   { transform: rotate(360deg); }
+}
+@keyframes orbitBwd {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to   { transform: translate(-50%, -50%) rotate(-360deg); }
 }
 
 /* ============================================================

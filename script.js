@@ -220,6 +220,46 @@ const $$ = sel => document.querySelectorAll(sel);
 })();
 
 /* ============================================================
+   ORBITAL SYSTEM  (JS-driven true circle, labels always upright)
+   ============================================================ */
+(function initOrbital() {
+  const system = document.querySelector('.orbital-system');
+  if (!system) return;
+
+  const nodes = system.querySelectorAll('.orbit-node');
+  const count = nodes.length;
+  const radius = 170; // px from center
+  let angle = 0;      // current rotation in radians
+  const speed = 0.0004; // radians per ms — full circle ~15.7s
+
+  // Evenly space labels around the circle
+  const offsets = Array.from({ length: count }, (_, i) =>
+    (2 * Math.PI / count) * i
+  );
+
+  const cx = system.offsetWidth  / 2;
+  const cy = system.offsetHeight / 2;
+
+  let last = null;
+  function tick(ts) {
+    if (last !== null) angle += speed * (ts - last);
+    last = ts;
+
+    nodes.forEach((node, i) => {
+      const a = angle + offsets[i];
+      const x = cx + radius * Math.cos(a);
+      const y = cy + radius * Math.sin(a);
+      // position the node; label stays upright via translate(-50%,-50%) in CSS
+      node.style.left = x + 'px';
+      node.style.top  = y + 'px';
+    });
+
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+})();
+
+/* ============================================================
    ORBITAL RANDOM SPEEDS  (removed — each axis has its own duration)
    ============================================================ */
 

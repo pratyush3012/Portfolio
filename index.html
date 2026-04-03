@@ -6,23 +6,23 @@
   <title>Pratyush Sharma — Branding & Marketing</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;600;700;800;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <!-- Grain Overlay -->
-  <div class="grain"></div>
+  <!-- Grain -->
+  <div class="grain" aria-hidden="true"></div>
 
   <!-- Custom Cursor -->
-  <div class="cursor" id="cursor"></div>
-  <div class="cursor-follower" id="cursorFollower"></div>
+  <div class="cursor" id="cursor" aria-hidden="true"></div>
+  <div class="cursor-follower" id="cursorFollower" aria-hidden="true"></div>
 
   <!-- Scroll Progress -->
-  <div class="scroll-progress" id="scrollProgress"></div>
+  <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
 
   <!-- Loader -->
-  <div class="loader" id="loader">
+  <div class="loader" id="loader" aria-hidden="true">
     <div class="loader-inner">
       <div class="loader-logo">PS</div>
       <div class="loader-bar"><div class="loader-fill" id="loaderFill"></div></div>
@@ -40,13 +40,13 @@
       <li><a href="#contact" class="nav-link">Contact</a></li>
     </ul>
     <a href="#contact" class="nav-cta magnetic">Let's Talk</a>
-    <div class="hamburger" id="hamburger">
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
       <span></span><span></span><span></span>
-    </div>
+    </button>
   </nav>
 
   <!-- Mobile Menu -->
-  <div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
     <ul>
       <li><a href="#about" class="mobile-link">About</a></li>
       <li><a href="#skills" class="mobile-link">Skills</a></li>
@@ -56,189 +56,265 @@
     </ul>
   </div>
 
-  <!-- HERO -->
+  <!-- ===================== HERO ===================== -->
   <section class="hero" id="hero">
-    <canvas id="particleCanvas"></canvas>
+    <!-- Single background: gradient blob only, no canvas -->
+    <div class="hero-blob" aria-hidden="true"></div>
+    <div class="hero-blob hero-blob--2" aria-hidden="true"></div>
+
     <div class="hero-content">
-      <div class="hero-badge reveal-up">Available for opportunities</div>
-      <h1 class="hero-name">
-        <span class="name-line reveal-up" data-delay="0.1">Pratyush</span>
-        <span class="name-line reveal-up gradient-text" data-delay="0.2">Sharma</span>
+      <div class="hero-badge" id="heroBadge">
+        <span class="badge-dot"></span>Available for opportunities
+      </div>
+
+      <h1 class="hero-name" aria-label="Pratyush Sharma">
+        <span class="hero-name__line" id="heroLine1"></span>
+        <span class="hero-name__line hero-name__line--accent" id="heroLine2"></span>
       </h1>
-      <p class="hero-role reveal-up" data-delay="0.3">Branding &amp; Marketing Enthusiast</p>
-      <p class="hero-tagline reveal-up" data-delay="0.4">
-        <span id="typedText"></span><span class="cursor-blink">|</span>
+
+      <p class="hero-role" id="heroRole">Branding &amp; Marketing Enthusiast</p>
+
+      <p class="hero-tagline">
+        <span id="typedText"></span><span class="cursor-blink" aria-hidden="true">|</span>
       </p>
-      <div class="hero-cta reveal-up" data-delay="0.5">
+
+      <div class="hero-cta" id="heroCta">
         <a href="#work" class="btn-primary magnetic">View Work</a>
         <a href="#contact" class="btn-secondary magnetic">Contact Me</a>
       </div>
-      <div class="hero-scroll reveal-up" data-delay="0.6">
+
+      <div class="hero-scroll" id="heroScroll">
         <span>Scroll</span>
         <div class="scroll-line"></div>
       </div>
     </div>
-    <div class="hero-bg-glow"></div>
   </section>
 
-  <!-- ABOUT -->
+  <!-- ===================== ABOUT ===================== -->
   <section class="about section" id="about">
     <div class="container">
       <div class="about-grid">
         <div class="about-text">
           <span class="section-label reveal-up">About Me</span>
           <h2 class="section-title reveal-up">Crafting stories that <span class="gradient-text">actually land.</span></h2>
-          <p class="about-desc reveal-up">
+          <p class="about-desc reveal-up" data-delay="0.1">
             I'm not just someone who makes content — I'm someone who thinks about why it works. Branding, to me, is the art of making people feel something before they even read a word. I obsess over the details: the right tone, the right visual, the right moment to say something bold.
           </p>
-          <p class="about-desc reveal-up">
+          <p class="about-desc reveal-up" data-delay="0.2">
             From writing articles that rack up real reads to designing visuals that stop the scroll, I bring a mix of creative instinct and strategic thinking to everything I touch. I'm here to build brands that people actually remember.
           </p>
-          <div class="about-stats reveal-up">
+          <div class="about-stats reveal-up" data-delay="0.3">
             <div class="stat">
-              <span class="stat-num" data-target="20">0</span><span class="stat-plus">+</span>
+              <div class="stat-row">
+                <span class="stat-num" data-target="20">0</span><span class="stat-plus">+</span>
+              </div>
               <p>Articles Written</p>
             </div>
             <div class="stat">
-              <span class="stat-num" data-target="50">0</span><span class="stat-plus">K+</span>
+              <div class="stat-row">
+                <span class="stat-num" data-target="50">0</span><span class="stat-plus">K+</span>
+              </div>
               <p>Content Reach</p>
             </div>
             <div class="stat">
-              <span class="stat-num" data-target="15">0</span><span class="stat-plus">+</span>
+              <div class="stat-row">
+                <span class="stat-num" data-target="15">0</span><span class="stat-plus">+</span>
+              </div>
               <p>Projects Created</p>
             </div>
           </div>
         </div>
+
         <div class="about-visual reveal-right">
-          <div class="about-card-wrap">
-            <div class="about-card">
-              <div class="about-card-inner">
-                <div class="about-avatar">
-                  <div class="avatar-ring"></div>
-                  <div class="avatar-initials">PS</div>
-                </div>
-                <div class="floating-tag tag-1">Branding</div>
-                <div class="floating-tag tag-2">Content</div>
-                <div class="floating-tag tag-3">Strategy</div>
-                <div class="floating-tag tag-4">Storytelling</div>
-              </div>
+          <div class="about-card tilt-card">
+            <div class="about-card__glow" aria-hidden="true"></div>
+            <div class="about-avatar">
+              <div class="avatar-ring" aria-hidden="true"></div>
+              <span class="avatar-initials">PS</span>
             </div>
+            <div class="floating-tag tag-1">Branding</div>
+            <div class="floating-tag tag-2">Content</div>
+            <div class="floating-tag tag-3">Strategy</div>
+            <div class="floating-tag tag-4">Storytelling</div>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- SKILLS -->
+  <!-- ===================== SKILLS ===================== -->
   <section class="skills section" id="skills">
     <div class="container">
       <span class="section-label reveal-up">What I Do</span>
       <h2 class="section-title reveal-up">Skills &amp; <span class="gradient-text">Expertise</span></h2>
       <div class="skills-grid">
         <div class="skill-card reveal-up tilt-card" data-delay="0">
-          <div class="skill-icon">✍️</div>
+          <div class="skill-icon" aria-hidden="true">✍️</div>
           <h3>Content Writing</h3>
           <p>Long-form articles, blogs, and copy that inform, engage, and convert.</p>
-          <div class="skill-glow"></div>
+          <div class="skill-glow" aria-hidden="true"></div>
         </div>
-        <div class="skill-card reveal-up tilt-card" data-delay="0.1">
-          <div class="skill-icon">🎨</div>
+        <div class="skill-card reveal-up tilt-card" data-delay="0.08">
+          <div class="skill-icon" aria-hidden="true">🎨</div>
           <h3>Social Media Graphics</h3>
           <p>Eye-catching visuals crafted in Canva that stop the scroll and build brand identity.</p>
-          <div class="skill-glow"></div>
+          <div class="skill-glow" aria-hidden="true"></div>
         </div>
-        <div class="skill-card reveal-up tilt-card" data-delay="0.2">
-          <div class="skill-icon">🎬</div>
+        <div class="skill-card reveal-up tilt-card" data-delay="0.16">
+          <div class="skill-icon" aria-hidden="true">🎬</div>
           <h3>Reels &amp; Video Editing</h3>
           <p>Short-form video content edited for maximum impact and platform-native feel.</p>
-          <div class="skill-glow"></div>
+          <div class="skill-glow" aria-hidden="true"></div>
         </div>
-        <div class="skill-card reveal-up tilt-card" data-delay="0.3">
-          <div class="skill-icon">📊</div>
+        <div class="skill-card reveal-up tilt-card" data-delay="0.24">
+          <div class="skill-icon" aria-hidden="true">📊</div>
           <h3>Content Strategy</h3>
           <p>Data-informed planning that aligns content with audience needs and brand goals.</p>
-          <div class="skill-glow"></div>
+          <div class="skill-glow" aria-hidden="true"></div>
         </div>
-        <div class="skill-card reveal-up tilt-card" data-delay="0.4">
-          <div class="skill-icon">💡</div>
+        <div class="skill-card reveal-up tilt-card" data-delay="0.32">
+          <div class="skill-icon" aria-hidden="true">💡</div>
           <h3>Creative Storytelling</h3>
           <p>Turning ideas into narratives that resonate, inspire, and build lasting connections.</p>
-          <div class="skill-glow"></div>
+          <div class="skill-glow" aria-hidden="true"></div>
         </div>
-        <div class="skill-card reveal-up tilt-card" data-delay="0.5">
-          <div class="skill-icon">🚀</div>
+        <div class="skill-card reveal-up tilt-card" data-delay="0.4">
+          <div class="skill-icon" aria-hidden="true">🚀</div>
           <h3>Brand Building</h3>
           <p>Shaping how a brand looks, sounds, and feels across every touchpoint.</p>
-          <div class="skill-glow"></div>
+          <div class="skill-glow" aria-hidden="true"></div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- WORK -->
+  <!-- ===================== WORK ===================== -->
   <section class="work section" id="work">
     <div class="container">
       <span class="section-label reveal-up">Portfolio</span>
       <h2 class="section-title reveal-up">Selected <span class="gradient-text">Work</span></h2>
       <p class="section-sub reveal-up">Articles published on Sportskeeda — real content, real reach.</p>
-      <div class="work-grid">
-        <div class="work-card reveal-up" data-delay="0">
-          <div class="work-card-img">
-            <div class="work-img-placeholder" style="--c1:#7c3aed;--c2:#2563eb">SK</div>
-            <div class="work-overlay">
-              <a href="#" class="work-read-btn">Read Article →</a>
+
+      <!-- Filter -->
+      <div class="work-filters reveal-up" data-delay="0.1">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="articles">Articles</button>
+        <button class="filter-btn" data-filter="graphics">Graphics</button>
+      </div>
+
+      <div class="work-grid" id="workGrid">
+        <article class="work-card reveal-up" data-delay="0" data-category="articles"
+          data-title="Article Title One"
+          data-desc="A deep-dive into the story behind the headlines — sharp analysis, engaging prose, and a perspective that keeps readers coming back."
+          data-insight="Focused on engagement & storytelling"
+          data-link="#">
+          <div class="work-card__img">
+            <div class="work-img-bg" style="--c1:#7c3aed;--c2:#2563eb">
+              <span class="work-img-label">SK</span>
+            </div>
+            <div class="work-card__overlay">
+              <span class="work-card__tag-overlay">Sportskeeda · Article</span>
+              <h3 class="work-card__title-overlay">Article Title One</h3>
+              <a href="#" class="work-read-btn" target="_blank" rel="noopener">Read Article →</a>
             </div>
           </div>
-          <div class="work-card-body">
+          <div class="work-card__body">
             <span class="work-tag">Sportskeeda</span>
             <h3>Article Title One</h3>
-            <p>A deep-dive into [topic] — exploring the story behind the headlines with sharp analysis and engaging prose.</p>
+            <p>A deep-dive into the story behind the headlines with sharp analysis and engaging prose.</p>
+            <span class="work-insight">💡 Focused on engagement &amp; storytelling</span>
           </div>
-        </div>
-        <div class="work-card reveal-up" data-delay="0.1">
-          <div class="work-card-img">
-            <div class="work-img-placeholder" style="--c1:#db2777;--c2:#7c3aed">SK</div>
-            <div class="work-overlay">
-              <a href="#" class="work-read-btn">Read Article →</a>
+        </article>
+
+        <article class="work-card reveal-up" data-delay="0.08" data-category="articles"
+          data-title="Article Title Two"
+          data-desc="Breaking down the topic with a fresh perspective — the kind of take that gets people talking, sharing, and coming back for more."
+          data-insight="Focused on click optimization"
+          data-link="#">
+          <div class="work-card__img">
+            <div class="work-img-bg" style="--c1:#db2777;--c2:#7c3aed">
+              <span class="work-img-label">SK</span>
+            </div>
+            <div class="work-card__overlay">
+              <span class="work-card__tag-overlay">Sportskeeda · Article</span>
+              <h3 class="work-card__title-overlay">Article Title Two</h3>
+              <a href="#" class="work-read-btn" target="_blank" rel="noopener">Read Article →</a>
             </div>
           </div>
-          <div class="work-card-body">
+          <div class="work-card__body">
             <span class="work-tag">Sportskeeda</span>
             <h3>Article Title Two</h3>
-            <p>Breaking down [topic] with a fresh perspective — the kind of take that gets people talking and sharing.</p>
+            <p>Breaking down the topic with a fresh perspective — the kind of take that gets people talking.</p>
+            <span class="work-insight">💡 Focused on click optimization</span>
           </div>
-        </div>
-        <div class="work-card reveal-up" data-delay="0.2">
-          <div class="work-card-img">
-            <div class="work-img-placeholder" style="--c1:#0891b2;--c2:#7c3aed">SK</div>
-            <div class="work-overlay">
-              <a href="#" class="work-read-btn">Read Article →</a>
+        </article>
+
+        <article class="work-card reveal-up" data-delay="0.16" data-category="articles"
+          data-title="Article Title Three"
+          data-desc="An in-depth look at the subject — researched, written, and crafted to keep readers hooked from the first line to the last."
+          data-insight="Focused on depth & retention"
+          data-link="#">
+          <div class="work-card__img">
+            <div class="work-img-bg" style="--c1:#0891b2;--c2:#7c3aed">
+              <span class="work-img-label">SK</span>
+            </div>
+            <div class="work-card__overlay">
+              <span class="work-card__tag-overlay">Sportskeeda · Article</span>
+              <h3 class="work-card__title-overlay">Article Title Three</h3>
+              <a href="#" class="work-read-btn" target="_blank" rel="noopener">Read Article →</a>
             </div>
           </div>
-          <div class="work-card-body">
+          <div class="work-card__body">
             <span class="work-tag">Sportskeeda</span>
             <h3>Article Title Three</h3>
-            <p>An in-depth look at [topic] — researched, written, and crafted to keep readers hooked from start to finish.</p>
+            <p>An in-depth look — researched and crafted to keep readers hooked from start to finish.</p>
+            <span class="work-insight">💡 Focused on depth &amp; retention</span>
           </div>
-        </div>
-        <div class="work-card reveal-up" data-delay="0.3">
-          <div class="work-card-img">
-            <div class="work-img-placeholder" style="--c1:#059669;--c2:#2563eb">SK</div>
-            <div class="work-overlay">
-              <a href="#" class="work-read-btn">Read Article →</a>
+        </article>
+
+        <article class="work-card reveal-up" data-delay="0.24" data-category="graphics"
+          data-title="Brand Visual Design"
+          data-desc="A social media graphic series designed to build brand identity and drive engagement across Instagram and LinkedIn."
+          data-insight="Focused on visual brand consistency"
+          data-link="#">
+          <div class="work-card__img">
+            <div class="work-img-bg" style="--c1:#059669;--c2:#2563eb">
+              <span class="work-img-label">🎨</span>
+            </div>
+            <div class="work-card__overlay">
+              <span class="work-card__tag-overlay">Canva · Graphics</span>
+              <h3 class="work-card__title-overlay">Brand Visual Design</h3>
+              <a href="#" class="work-read-btn" target="_blank" rel="noopener">View Work →</a>
             </div>
           </div>
-          <div class="work-card-body">
-            <span class="work-tag">Sportskeeda</span>
-            <h3>Article Title Four</h3>
-            <p>Covering [topic] with the kind of detail and voice that builds a loyal readership over time.</p>
+          <div class="work-card__body">
+            <span class="work-tag">Graphics</span>
+            <h3>Brand Visual Design</h3>
+            <p>Social media graphic series designed to build brand identity and drive engagement.</p>
+            <span class="work-insight">💡 Focused on visual brand consistency</span>
           </div>
-        </div>
+        </article>
       </div>
     </div>
   </section>
 
-  <!-- SHOWCASE -->
+  <!-- Work Modal -->
+  <div class="work-modal" id="workModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="work-modal__overlay" id="workModalOverlay"></div>
+    <div class="work-modal__content">
+      <button class="modal-close" id="workModalClose" aria-label="Close modal">✕</button>
+      <div class="modal-img" id="modalImg"></div>
+      <div class="modal-body">
+        <span class="work-tag" id="modalTag"></span>
+        <h3 id="modalTitle"></h3>
+        <p id="modalDesc"></p>
+        <div class="modal-insight" id="modalInsight"></div>
+        <a href="#" id="modalLink" class="btn-primary" target="_blank" rel="noopener">Read Article →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== SHOWCASE ===================== -->
   <section class="showcase section" id="showcase">
     <div class="container">
       <span class="section-label reveal-up">Creative Work</span>
@@ -246,73 +322,91 @@
       <p class="section-sub reveal-up">Designs, visuals, and content pieces — click to preview.</p>
       <div class="masonry-grid">
         <div class="masonry-item reveal-up" data-delay="0" data-title="Social Media Post" data-desc="Instagram carousel for brand awareness campaign">
-          <div class="masonry-placeholder" style="--c1:#7c3aed;--c2:#ec4899;height:280px"></div>
-          <div class="masonry-hover"><span>View</span></div>
+          <div class="masonry-bg" style="--c1:#7c3aed;--c2:#ec4899;--h:280px"></div>
+          <div class="masonry-overlay">
+            <span class="masonry-overlay__title">Social Media Post</span>
+            <span class="masonry-overlay__desc">Instagram carousel</span>
+          </div>
         </div>
-        <div class="masonry-item reveal-up" data-delay="0.1" data-title="Brand Visual" data-desc="Logo and identity design concept">
-          <div class="masonry-placeholder" style="--c1:#2563eb;--c2:#7c3aed;height:200px"></div>
-          <div class="masonry-hover"><span>View</span></div>
+        <div class="masonry-item reveal-up" data-delay="0.08" data-title="Brand Visual" data-desc="Logo and identity design concept">
+          <div class="masonry-bg" style="--c1:#2563eb;--c2:#7c3aed;--h:200px"></div>
+          <div class="masonry-overlay">
+            <span class="masonry-overlay__title">Brand Visual</span>
+            <span class="masonry-overlay__desc">Identity design</span>
+          </div>
         </div>
-        <div class="masonry-item reveal-up" data-delay="0.2" data-title="Reel Thumbnail" data-desc="Short-form video content for sports brand">
-          <div class="masonry-placeholder" style="--c1:#db2777;--c2:#f97316;height:320px"></div>
-          <div class="masonry-hover"><span>View</span></div>
+        <div class="masonry-item reveal-up" data-delay="0.16" data-title="Reel Thumbnail" data-desc="Short-form video content for sports brand">
+          <div class="masonry-bg" style="--c1:#db2777;--c2:#f97316;--h:320px"></div>
+          <div class="masonry-overlay">
+            <span class="masonry-overlay__title">Reel Thumbnail</span>
+            <span class="masonry-overlay__desc">Sports brand video</span>
+          </div>
         </div>
-        <div class="masonry-item reveal-up" data-delay="0.3" data-title="Content Graphic" data-desc="Infographic for social media engagement">
-          <div class="masonry-placeholder" style="--c1:#0891b2;--c2:#059669;height:240px"></div>
-          <div class="masonry-hover"><span>View</span></div>
+        <div class="masonry-item reveal-up" data-delay="0.08" data-title="Content Graphic" data-desc="Infographic for social media engagement">
+          <div class="masonry-bg" style="--c1:#0891b2;--c2:#059669;--h:240px"></div>
+          <div class="masonry-overlay">
+            <span class="masonry-overlay__title">Content Graphic</span>
+            <span class="masonry-overlay__desc">Social infographic</span>
+          </div>
         </div>
-        <div class="masonry-item reveal-up" data-delay="0.4" data-title="Story Design" data-desc="Instagram story series for product launch">
-          <div class="masonry-placeholder" style="--c1:#7c3aed;--c2:#0891b2;height:260px"></div>
-          <div class="masonry-hover"><span>View</span></div>
+        <div class="masonry-item reveal-up" data-delay="0.16" data-title="Story Design" data-desc="Instagram story series for product launch">
+          <div class="masonry-bg" style="--c1:#7c3aed;--c2:#0891b2;--h:260px"></div>
+          <div class="masonry-overlay">
+            <span class="masonry-overlay__title">Story Design</span>
+            <span class="masonry-overlay__desc">Product launch series</span>
+          </div>
         </div>
-        <div class="masonry-item reveal-up" data-delay="0.5" data-title="Video Edit" data-desc="Highlight reel with motion graphics">
-          <div class="masonry-placeholder" style="--c1:#f97316;--c2:#db2777;height:200px"></div>
-          <div class="masonry-hover"><span>View</span></div>
+        <div class="masonry-item reveal-up" data-delay="0.24" data-title="Video Edit" data-desc="Highlight reel with motion graphics">
+          <div class="masonry-bg" style="--c1:#f97316;--c2:#db2777;--h:200px"></div>
+          <div class="masonry-overlay">
+            <span class="masonry-overlay__title">Video Edit</span>
+            <span class="masonry-overlay__desc">Highlight reel</span>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Lightbox -->
-  <div class="lightbox" id="lightbox">
-    <div class="lightbox-overlay" id="lightboxOverlay"></div>
-    <div class="lightbox-content">
-      <button class="lightbox-close" id="lightboxClose">✕</button>
-      <div class="lightbox-img" id="lightboxImg"></div>
+  <!-- Showcase Lightbox -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true">
+    <div class="lightbox__overlay" id="lightboxOverlay"></div>
+    <div class="lightbox__content">
+      <button class="modal-close" id="lightboxClose" aria-label="Close lightbox">✕</button>
+      <div class="lightbox__img" id="lightboxImg"></div>
       <h3 id="lightboxTitle"></h3>
       <p id="lightboxDesc"></p>
     </div>
   </div>
 
-  <!-- WHY ME -->
+  <!-- ===================== WHY ME ===================== -->
   <section class="why section" id="why">
     <div class="container">
       <span class="section-label reveal-up">Why Work With Me</span>
       <h2 class="section-title reveal-up">What sets me <span class="gradient-text">apart</span></h2>
-      <div class="why-scroll-wrap">
-        <div class="why-track" id="whyTrack">
-          <div class="why-card">
-            <div class="why-num">01</div>
+      <div class="why-track-wrap">
+        <div class="why-track">
+          <div class="why-card reveal-up" data-delay="0">
+            <div class="why-num" aria-hidden="true">01</div>
             <h3>Brand-First Thinking</h3>
             <p>Every piece of content I create is filtered through one question: does this serve the brand? Strategy before aesthetics, always.</p>
           </div>
-          <div class="why-card">
-            <div class="why-num">02</div>
+          <div class="why-card reveal-up" data-delay="0.08">
+            <div class="why-num" aria-hidden="true">02</div>
             <h3>Creative Instinct</h3>
             <p>I don't just follow trends — I understand why they work. That lets me create content that feels fresh without being gimmicky.</p>
           </div>
-          <div class="why-card">
-            <div class="why-num">03</div>
+          <div class="why-card reveal-up" data-delay="0.16">
+            <div class="why-num" aria-hidden="true">03</div>
             <h3>Fast Learner</h3>
             <p>New platform, new format, new brief — I adapt fast. Give me a challenge and I'll come back with something better than expected.</p>
           </div>
-          <div class="why-card">
-            <div class="why-num">04</div>
+          <div class="why-card reveal-up" data-delay="0.24">
+            <div class="why-num" aria-hidden="true">04</div>
             <h3>Audience-First Mindset</h3>
             <p>I write and design for real people, not algorithms. Understanding the audience is the foundation of everything I do.</p>
           </div>
-          <div class="why-card">
-            <div class="why-num">05</div>
+          <div class="why-card reveal-up" data-delay="0.32">
+            <div class="why-num" aria-hidden="true">05</div>
             <h3>Genuine Passion</h3>
             <p>This isn't just a career path — it's what I actually care about. That energy shows up in the work, every single time.</p>
           </div>
@@ -321,7 +415,7 @@
     </div>
   </section>
 
-  <!-- CONTACT -->
+  <!-- ===================== CONTACT ===================== -->
   <section class="contact section" id="contact">
     <div class="container">
       <span class="section-label reveal-up">Get In Touch</span>
@@ -329,45 +423,50 @@
       <p class="section-sub reveal-up">Open to internships, freelance projects, and collaborations.</p>
       <div class="contact-grid">
         <div class="contact-info reveal-up">
-          <a href="mailto:pratyush@email.com" class="contact-link">
-            <span class="contact-icon">📧</span>
+          <div class="contact-link" id="copyEmailBtn" role="button" tabindex="0" aria-label="Copy email address">
+            <span class="contact-icon" aria-hidden="true">📧</span>
             <div>
-              <small>Email</small>
+              <small>Email — click to copy</small>
               <p>pratyush@email.com</p>
             </div>
-          </a>
-          <a href="https://linkedin.com/in/pratyushsharma" target="_blank" class="contact-link">
-            <span class="contact-icon">💼</span>
+            <span class="copy-badge" id="copyBadge">Copied!</span>
+          </div>
+          <a href="https://linkedin.com/in/pratyushsharma" target="_blank" rel="noopener" class="contact-link">
+            <span class="contact-icon" aria-hidden="true">💼</span>
             <div>
               <small>LinkedIn</small>
               <p>linkedin.com/in/pratyushsharma</p>
             </div>
           </a>
-          <a href="https://instagram.com/pratyushsharma" target="_blank" class="contact-link">
-            <span class="contact-icon">📸</span>
+          <a href="https://instagram.com/pratyushsharma" target="_blank" rel="noopener" class="contact-link">
+            <span class="contact-icon" aria-hidden="true">📸</span>
             <div>
               <small>Instagram</small>
               <p>@pratyushsharma</p>
             </div>
           </a>
         </div>
-        <form class="contact-form reveal-up" id="contactForm">
+
+        <form class="contact-form reveal-up" id="contactForm" novalidate>
           <div class="form-group">
-            <input type="text" id="fname" placeholder=" " required />
+            <input type="text" id="fname" placeholder=" " required autocomplete="name" />
             <label for="fname">Your Name</label>
-            <div class="input-glow"></div>
+            <div class="input-line" aria-hidden="true"></div>
           </div>
           <div class="form-group">
-            <input type="email" id="femail" placeholder=" " required />
+            <input type="email" id="femail" placeholder=" " required autocomplete="email" />
             <label for="femail">Your Email</label>
-            <div class="input-glow"></div>
+            <div class="input-line" aria-hidden="true"></div>
           </div>
           <div class="form-group">
             <textarea id="fmsg" rows="4" placeholder=" " required></textarea>
             <label for="fmsg">Your Message</label>
-            <div class="input-glow"></div>
+            <div class="input-line" aria-hidden="true"></div>
           </div>
-          <button type="submit" class="btn-primary magnetic">Send Message</button>
+          <button type="submit" class="btn-primary magnetic" id="submitBtn">
+            <span id="submitText">Send Message</span>
+            <span id="submitSuccess" class="submit-success" aria-live="polite">Message Sent ✓</span>
+          </button>
         </form>
       </div>
     </div>
@@ -380,8 +479,8 @@
         <p>Designed &amp; Built by <span class="gradient-text">Pratyush Sharma</span></p>
         <div class="footer-links">
           <a href="mailto:pratyush@email.com" aria-label="Email">📧</a>
-          <a href="https://linkedin.com/in/pratyushsharma" target="_blank" aria-label="LinkedIn">💼</a>
-          <a href="https://instagram.com/pratyushsharma" target="_blank" aria-label="Instagram">📸</a>
+          <a href="https://linkedin.com/in/pratyushsharma" target="_blank" rel="noopener" aria-label="LinkedIn">💼</a>
+          <a href="https://instagram.com/pratyushsharma" target="_blank" rel="noopener" aria-label="Instagram">📸</a>
         </div>
       </div>
     </div>

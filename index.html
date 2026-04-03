@@ -8,9 +8,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
-  <!-- GSAP + ScrollTrigger -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 </head>
 <body>
 
@@ -87,10 +84,31 @@
         </div>
       </div>
 
-      <!-- RIGHT: image -->
+      <!-- RIGHT: animated code card graphic -->
       <div class="hero-image" id="heroImageWrap">
-        <img src="first.JPG" alt="Pratyush Sharma"
-          onerror="this.parentElement.classList.add('hero-image--fallback')" />
+        <div class="hero-code-card">
+          <div class="hcc-bar">
+            <span class="hcc-dot" style="background:#ff5f57"></span>
+            <span class="hcc-dot" style="background:#febc2e"></span>
+            <span class="hcc-dot" style="background:#28c840"></span>
+            <span class="hcc-filename">pratyush.js</span>
+          </div>
+          <div class="hcc-body">
+            <div class="hcc-line"><span class="hcc-kw">const</span> <span class="hcc-var">writer</span> <span class="hcc-op">=</span> <span class="hcc-brace">{</span></div>
+            <div class="hcc-line hcc-indent"><span class="hcc-key">name</span><span class="hcc-op">:</span> <span class="hcc-str">"Pratyush Sharma"</span><span class="hcc-op">,</span></div>
+            <div class="hcc-line hcc-indent"><span class="hcc-key">role</span><span class="hcc-op">:</span> <span class="hcc-str">"Content Writer"</span><span class="hcc-op">,</span></div>
+            <div class="hcc-line hcc-indent"><span class="hcc-key">skills</span><span class="hcc-op">:</span> <span class="hcc-brace">[</span></div>
+            <div class="hcc-line hcc-indent2"><span class="hcc-str">"Sports Journalism"</span><span class="hcc-op">,</span></div>
+            <div class="hcc-line hcc-indent2"><span class="hcc-str">"Data Research"</span><span class="hcc-op">,</span></div>
+            <div class="hcc-line hcc-indent2"><span class="hcc-str">"SEO Content"</span><span class="hcc-op">,</span></div>
+            <div class="hcc-line hcc-indent"><span class="hcc-brace">]</span><span class="hcc-op">,</span></div>
+            <div class="hcc-line hcc-indent"><span class="hcc-key">available</span><span class="hcc-op">:</span> <span class="hcc-bool">true</span></div>
+            <div class="hcc-line"><span class="hcc-brace">}</span><span class="hcc-op">;</span></div>
+            <div class="hcc-line hcc-gap"></div>
+            <div class="hcc-line"><span class="hcc-fn">console</span><span class="hcc-op">.</span><span class="hcc-fn">log</span><span class="hcc-brace">(</span><span class="hcc-var">writer</span><span class="hcc-op">.</span><span class="hcc-key">name</span><span class="hcc-brace">)</span><span class="hcc-op">;</span></div>
+            <div class="hcc-line hcc-output"><span class="hcc-comment">// → Pratyush Sharma<span class="hcc-cursor">▌</span></span></div>
+          </div>
+        </div>
       </div>
 
     </div>
@@ -146,7 +164,7 @@
             <div class="orbital-system">
 
               <div class="orbit-center">
-                <img src="my.jpg" alt="Pratyush Sharma" class="profile-img"
+                <img src="my.JPG" alt="Pratyush Sharma" class="profile-img"
                   onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
                 <div class="orbit-initials">PS</div>
               </div>

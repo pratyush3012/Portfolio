@@ -96,36 +96,17 @@ const $$ = sel => document.querySelectorAll(sel);
 })();
 
 /* ============================================================
-   HERO — letter-by-letter reveal
+   HERO — staggered reveal
    ============================================================ */
 (function initHero() {
-  function splitLetters(el, text) {
-    el.innerHTML = text.split('').map(ch =>
-      ch === ' ' ? ' ' : `<span class="letter">${ch}</span>`
-    ).join('');
-  }
-
-  splitLetters($('heroLine1'), 'Pratyush');
-  splitLetters($('heroLine2'), 'Sharma');
-
   setTimeout(() => {
-    // Badge
     $('heroBadge').classList.add('visible');
-
-    // Line 1 letters
-    $$('#heroLine1 .letter').forEach((l, i) =>
-      setTimeout(() => l.classList.add('visible'), 200 + i * 55));
-
-    // Line 2 letters
-    $$('#heroLine2 .letter').forEach((l, i) =>
-      setTimeout(() => l.classList.add('visible'), 500 + i * 55));
-
-    // Role, typed, buttons, image, scroll
-    setTimeout(() => $('heroRole').classList.add('visible'), 900);
-    setTimeout(() => document.querySelector('.hero-desc').classList.add('visible'), 1050);
-    setTimeout(() => $('heroCta').classList.add('visible'), 1200);
-    setTimeout(() => $('heroImageWrap').classList.add('visible'), 600);
-    setTimeout(() => $('heroScroll').classList.add('visible'), 1450);
+    setTimeout(() => document.querySelector('.hero-title').classList.add('visible'), 150);
+    setTimeout(() => $('heroRole').classList.add('visible'), 350);
+    setTimeout(() => document.querySelector('.hero-desc').classList.add('visible'), 500);
+    setTimeout(() => $('heroCta').classList.add('visible'), 650);
+    setTimeout(() => $('heroImageWrap').classList.add('visible'), 300);
+    setTimeout(() => $('heroScroll').classList.add('visible'), 900);
   }, 800);
 })();
 

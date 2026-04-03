@@ -193,17 +193,16 @@ body.cursor-hover .cursor-follower { width: 52px; height: 52px; border-color: rg
 @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.8)} }
 
 .hero-title {
-  font-size: clamp(3.5rem, 8vw, 6rem); font-weight: 900;
-  line-height: 0.95; letter-spacing: -3px;
-  margin-bottom: 1rem; display: flex; flex-direction: column;
+  font-size: clamp(3rem, 7vw, 4.2rem); font-weight: 800;
+  line-height: 1.05; letter-spacing: -2px;
+  margin-bottom: 1rem;
+  opacity: 0; transform: translateY(20px);
+  transition: opacity 0.7s var(--ease) 0.2s, transform 0.7s var(--ease) 0.2s;
 }
-/* letter spans injected by JS */
-.letter {
-  display: inline-block;
-  opacity: 0; transform: translateY(100%);
-  transition: opacity 0.5s var(--ease), transform 0.5s var(--ease);
+.hero-title.visible { opacity: 1; transform: translateY(0); }
+.hero-lastname {
+  display: inline-block; color: #a78bfa;
 }
-.letter.visible { opacity: 1; transform: translateY(0); }
 
 .hero-role {
   font-size: clamp(0.8rem, 1.8vw, 1rem); color: var(--muted);
@@ -232,7 +231,7 @@ body.cursor-hover .cursor-follower { width: 52px; height: 52px; border-color: rg
 
 /* RIGHT: image */
 .hero-image {
-  position: relative;
+  position: relative; display: flex; justify-content: center;
   opacity: 0; transform: translateX(30px);
   transition: opacity 0.8s var(--ease) 0.4s, transform 0.8s var(--ease) 0.4s;
 }
@@ -244,15 +243,15 @@ body.cursor-hover .cursor-follower { width: 52px; height: 52px; border-color: rg
   filter: blur(40px); z-index: 0; pointer-events: none;
 }
 .hero-image img {
-  width: 100%; max-width: 380px; border-radius: 20px;
+  width: 100%; max-width: 280px; height: 420px;
   object-fit: cover; object-position: center top;
-  display: block; position: relative; z-index: 1;
-  filter: grayscale(8%);
+  border-radius: 18px; display: block; position: relative; z-index: 1;
+  filter: contrast(1.05) brightness(0.95);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 40px rgba(124,58,237,0.2);
   transition: transform 0.5s var(--ease);
-  box-shadow: 0 24px 60px rgba(0,0,0,0.5);
 }
-.hero-image img:hover { transform: scale(1.03); }
-.hero-image--fallback { background: var(--gradient); border-radius: 20px; min-height: 380px; }
+.hero-image img:hover { transform: translateY(-5px) scale(1.02); }
+.hero-image--fallback { background: var(--gradient); border-radius: 18px; min-height: 420px; max-width: 280px; }
 
 /* Scroll indicator */
 .hero-scroll {

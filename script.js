@@ -306,33 +306,34 @@ const $$ = sel => document.querySelectorAll(sel);
 /* ============================================================
    COPY EMAIL
    ============================================================ */
-(function initCopyEmail() {
-  const btn = $('copyEmailBtn');
-  const badge = $('copyBadge');
-  if (!btn) return;
-  btn.addEventListener('click', () => {
-    navigator.clipboard.writeText('pratyush@email.com').then(() => {
-      badge.classList.add('show');
-      setTimeout(() => badge.classList.remove('show'), 2000);
-    });
+function copyEmail() {
+  const email = 'Pratyushsharma1209@gmail.com';
+  navigator.clipboard.writeText(email).then(() => {
+    const el = document.getElementById('emailText');
+    const original = el.innerText;
+    el.innerText = 'Copied ✓';
+    setTimeout(() => { el.innerText = original; }, 2000);
   });
-  btn.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') btn.click(); });
-})();
+}
 
 /* ============================================================
-   CONTACT FORM
+   CONTACT FORM → WHATSAPP
    ============================================================ */
 (function initForm() {
   const form = $('contactForm');
-  const btn = $('submitBtn');
+  const btn  = $('sendBtn');
   if (!form) return;
-  form.addEventListener('submit', e => {
+
+  form.addEventListener('submit', function(e) {
     e.preventDefault();
-    btn.classList.add('sent');
-    setTimeout(() => {
-      btn.classList.remove('sent');
-      form.reset();
-    }, 3000);
+    const name    = $('fname').value.trim();
+    const email   = $('femail').value.trim();
+    const message = $('fmsg').value.trim();
+    const phone   = '919599071825';
+    const text    = `Hello Pratyush,%0A%0AName: ${encodeURIComponent(name)}%0AEmail: ${encodeURIComponent(email)}%0AMessage: ${encodeURIComponent(message)}`;
+    window.open(`https://wa.me/${phone}?text=${text}`, '_blank');
+    btn.textContent = 'Opening WhatsApp…';
+    setTimeout(() => { btn.textContent = 'Send Message'; form.reset(); }, 2500);
   });
 })();
 

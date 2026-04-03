@@ -581,16 +581,8 @@ body.cursor-hover .cursor-follower { width: 52px; height: 52px; border-color: rg
 }
 .form-group:focus-within .input-line { width: 100%; }
 
-/* Submit button states */
-#submitBtn { position: relative; overflow: hidden; border: none; cursor: pointer; }
-.submit-success {
-  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
-  background: linear-gradient(135deg, #059669, #0891b2);
-  border-radius: 50px; opacity: 0; transform: translateY(100%);
-  transition: opacity 0.4s var(--ease), transform 0.4s var(--ease);
-}
-#submitBtn.sent .submit-success { opacity: 1; transform: translateY(0); }
-#submitBtn.sent #submitText { opacity: 0; }
+/* Submit button */
+#sendBtn { border: none; cursor: pointer; width: 100%; }
 
 /* ============================================================
    FOOTER

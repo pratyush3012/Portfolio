@@ -325,6 +325,7 @@ body.cursor-hover .cursor-follower { width: 52px; height: 52px; border-color: rg
    ============================================================ */
 .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; }
 .about-text { max-width: 540px; }
+.about-text p { margin-bottom: 16px; line-height: 1.6; }
 .about-desc { color: var(--muted); line-height: 1.85; margin-bottom: 1.4rem; font-size: 1rem; max-width: 520px; }
 .about-stats { display: flex; gap: 2.5rem; margin-top: 2.5rem; margin-bottom: 0; }
 .about-note { margin-top: 1rem; font-size: 0.9rem; color: var(--muted); }

@@ -108,23 +108,23 @@ const $$ = sel => document.querySelectorAll(sel);
   splitLetters($('heroLine1'), 'Pratyush');
   splitLetters($('heroLine2'), 'Sharma');
 
-  // Stagger reveal after loader
   setTimeout(() => {
     // Badge
     $('heroBadge').classList.add('visible');
 
     // Line 1 letters
-    const l1 = $$('#heroLine1 .letter');
-    l1.forEach((l, i) => setTimeout(() => l.classList.add('visible'), 200 + i * 55));
+    $$('#heroLine1 .letter').forEach((l, i) =>
+      setTimeout(() => l.classList.add('visible'), 200 + i * 55));
 
     // Line 2 letters
-    const l2 = $$('#heroLine2 .letter');
-    l2.forEach((l, i) => setTimeout(() => l.classList.add('visible'), 500 + i * 55));
+    $$('#heroLine2 .letter').forEach((l, i) =>
+      setTimeout(() => l.classList.add('visible'), 500 + i * 55));
 
-    // Role, tagline, cta, scroll
+    // Role, typed, buttons, image, scroll
     setTimeout(() => $('heroRole').classList.add('visible'), 900);
-    setTimeout(() => document.querySelector('.hero-tagline').classList.add('visible'), 1050);
+    setTimeout(() => document.querySelector('.hero-desc').classList.add('visible'), 1050);
     setTimeout(() => $('heroCta').classList.add('visible'), 1200);
+    setTimeout(() => $('heroImageWrap').classList.add('visible'), 600);
     setTimeout(() => $('heroScroll').classList.add('visible'), 1450);
   }, 800);
 })();
@@ -160,15 +160,17 @@ const $$ = sel => document.querySelectorAll(sel);
    HERO PARALLAX  (debounced)
    ============================================================ */
 (function initHeroParallax() {
-  const content = document.querySelector('.hero-content');
+  const text = document.querySelector('.hero-text');
   let ticking = false;
   window.addEventListener('scroll', () => {
     if (!ticking) {
       requestAnimationFrame(() => {
         if (window.scrollY < window.innerHeight) {
           const y = window.scrollY;
-          content.style.transform = `translateY(${y * 0.22}px)`;
-          content.style.opacity = String(1 - y / (window.innerHeight * 0.75));
+          if (text) {
+            text.style.transform = `translateY(${y * 0.15}px)`;
+            text.style.opacity = String(1 - y / (window.innerHeight * 0.8));
+          }
         }
         ticking = false;
       });

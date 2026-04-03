@@ -58,35 +58,45 @@
 
   <!-- ===================== HERO ===================== -->
   <section class="hero" id="hero">
-    <!-- Single background: gradient blob only, no canvas -->
     <div class="hero-blob" aria-hidden="true"></div>
     <div class="hero-blob hero-blob--2" aria-hidden="true"></div>
 
-    <div class="hero-content">
-      <div class="hero-badge" id="heroBadge">
-        <span class="badge-dot"></span>Available for opportunities
+    <div class="container hero-container">
+
+      <!-- LEFT: text -->
+      <div class="hero-text">
+        <span class="availability-badge" id="heroBadge">
+          <span class="badge-dot"></span>Available for opportunities
+        </span>
+
+        <h1 class="hero-title" aria-label="Pratyush Sharma">
+          <span id="heroLine1"></span>
+          <span id="heroLine2" class="gradient-text"></span>
+        </h1>
+
+        <p class="hero-role" id="heroRole">Branding &amp; Marketing Enthusiast</p>
+
+        <p class="hero-desc">
+          <span id="typedText"></span><span class="cursor-blink" aria-hidden="true">|</span>
+        </p>
+
+        <div class="hero-buttons" id="heroCta">
+          <a href="#work" class="btn-primary magnetic">View Work</a>
+          <a href="#contact" class="btn-secondary magnetic">Contact Me</a>
+        </div>
       </div>
 
-      <h1 class="hero-name" aria-label="Pratyush Sharma">
-        <span class="hero-name__line" id="heroLine1"></span>
-        <span class="hero-name__line hero-name__line--accent" id="heroLine2"></span>
-      </h1>
-
-      <p class="hero-role" id="heroRole">Branding &amp; Marketing Enthusiast</p>
-
-      <p class="hero-tagline">
-        <span id="typedText"></span><span class="cursor-blink" aria-hidden="true">|</span>
-      </p>
-
-      <div class="hero-cta" id="heroCta">
-        <a href="#work" class="btn-primary magnetic">View Work</a>
-        <a href="#contact" class="btn-secondary magnetic">Contact Me</a>
+      <!-- RIGHT: image -->
+      <div class="hero-image" id="heroImageWrap">
+        <img src="first.JPG" alt="Pratyush Sharma"
+          onerror="this.parentElement.classList.add('hero-image--fallback')" />
       </div>
 
-      <div class="hero-scroll" id="heroScroll">
-        <span>Scroll</span>
-        <div class="scroll-line"></div>
-      </div>
+    </div>
+
+    <div class="hero-scroll" id="heroScroll">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
     </div>
   </section>
 

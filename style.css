@@ -137,15 +137,16 @@ body.cursor-hover .cursor-follower { width: 52px; height: 52px; border-color: rg
 .mobile-link:hover { color: var(--text); }
 
 /* ============================================================
-   HERO
+   HERO  (split layout)
    ============================================================ */
 .hero {
-  position: relative; min-height: 100vh;
-  display: flex; align-items: center; justify-content: center;
-  overflow: hidden; text-align: center;
+  position: relative; min-height: 85vh;
+  display: flex; flex-direction: column;
+  justify-content: center; overflow: hidden;
+  padding-top: 120px; padding-bottom: 4rem;
 }
 
-/* Single background: two large blurred blobs */
+/* Blobs */
 .hero-blob {
   position: absolute; border-radius: 50%; pointer-events: none;
   filter: blur(120px); opacity: 0.13;
@@ -165,36 +166,38 @@ body.cursor-hover .cursor-follower { width: 52px; height: 52px; border-color: rg
   to   { transform: translate(-58%, -52%) scale(1.06); }
 }
 
-.hero-content {
-  position: relative; z-index: 2; max-width: 860px; padding: 0 2rem;
+/* Split grid */
+.hero-container {
+  display: grid; grid-template-columns: 1.2fr 1fr;
+  align-items: center; gap: 4rem;
+  position: relative; z-index: 2;
 }
 
-.hero-badge {
+/* LEFT */
+.hero-text { max-width: 520px; }
+
+.availability-badge {
   display: inline-flex; align-items: center; gap: 0.5rem;
   padding: 0.4rem 1rem; border-radius: 50px;
   border: 1px solid var(--glass-border); background: var(--glass);
-  font-size: 0.78rem; color: var(--muted); margin-bottom: 2.5rem;
+  font-size: 0.78rem; color: var(--muted); margin-bottom: 1.5rem;
   backdrop-filter: blur(12px);
-  opacity: 0; transform: translateY(16px);
+  opacity: 0; transform: translateY(12px);
   transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
 }
-.hero-badge.visible { opacity: 1; transform: translateY(0); }
+.availability-badge.visible { opacity: 1; transform: translateY(0); }
 .badge-dot {
   width: 6px; height: 6px; border-radius: 50%; background: #4ade80;
-  animation: pulse 2s ease-in-out infinite;
+  animation: pulse 2s ease-in-out infinite; flex-shrink: 0;
 }
 @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.8)} }
 
-/* Letter-by-letter name reveal */
-.hero-name {
-  font-size: clamp(4rem, 10vw, 8.5rem); font-weight: 900;
-  line-height: 0.92; letter-spacing: -4px; margin-bottom: 1.2rem;
-  display: flex; flex-direction: column;
+.hero-title {
+  font-size: clamp(3.5rem, 8vw, 6rem); font-weight: 900;
+  line-height: 0.95; letter-spacing: -3px;
+  margin-bottom: 1rem; display: flex; flex-direction: column;
 }
-.hero-name__line { display: block; overflow: hidden; }
-.hero-name__line--accent { background: var(--gradient-text); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-
-/* Each letter is a span injected by JS */
+/* letter spans injected by JS */
 .letter {
   display: inline-block;
   opacity: 0; transform: translateY(100%);
@@ -203,34 +206,61 @@ body.cursor-hover .cursor-follower { width: 52px; height: 52px; border-color: rg
 .letter.visible { opacity: 1; transform: translateY(0); }
 
 .hero-role {
-  font-size: clamp(0.85rem, 2vw, 1.1rem); color: var(--muted);
+  font-size: clamp(0.8rem, 1.8vw, 1rem); color: var(--muted);
   font-weight: 400; letter-spacing: 3px; text-transform: uppercase;
-  margin-bottom: 1.5rem;
-  opacity: 0; transform: translateY(12px);
+  margin-bottom: 1.2rem;
+  opacity: 0; transform: translateY(10px);
   transition: opacity 0.6s var(--ease) 0.55s, transform 0.6s var(--ease) 0.55s;
 }
 .hero-role.visible { opacity: 1; transform: translateY(0); }
 
-.hero-tagline {
-  font-size: clamp(0.95rem, 1.8vw, 1.15rem); color: var(--muted);
-  margin-bottom: 3rem; min-height: 1.8rem;
+.hero-desc {
+  font-size: clamp(0.95rem, 1.6vw, 1.1rem); color: var(--muted);
+  margin-bottom: 2.5rem; min-height: 1.8rem; line-height: 1.6;
   opacity: 0; transition: opacity 0.6s var(--ease) 0.7s;
 }
-.hero-tagline.visible { opacity: 1; }
+.hero-desc.visible { opacity: 1; }
 .cursor-blink { animation: blink 1s step-end infinite; }
 @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
 
-.hero-cta {
-  display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 4rem;
-  opacity: 0; transform: translateY(12px);
+.hero-buttons {
+  display: flex; gap: 1rem; flex-wrap: wrap;
+  opacity: 0; transform: translateY(10px);
   transition: opacity 0.6s var(--ease) 0.85s, transform 0.6s var(--ease) 0.85s;
 }
-.hero-cta.visible { opacity: 1; transform: translateY(0); }
+.hero-buttons.visible { opacity: 1; transform: translateY(0); }
 
+/* RIGHT: image */
+.hero-image {
+  position: relative;
+  opacity: 0; transform: translateX(30px);
+  transition: opacity 0.8s var(--ease) 0.4s, transform 0.8s var(--ease) 0.4s;
+}
+.hero-image.visible { opacity: 1; transform: translateX(0); }
+
+.hero-image::before {
+  content: ''; position: absolute; inset: -20px; border-radius: 24px;
+  background: radial-gradient(circle at 60% 40%, rgba(124,58,237,0.35), transparent 70%);
+  filter: blur(40px); z-index: 0; pointer-events: none;
+}
+.hero-image img {
+  width: 100%; max-width: 380px; border-radius: 20px;
+  object-fit: cover; object-position: center top;
+  display: block; position: relative; z-index: 1;
+  filter: grayscale(8%);
+  transition: transform 0.5s var(--ease);
+  box-shadow: 0 24px 60px rgba(0,0,0,0.5);
+}
+.hero-image img:hover { transform: scale(1.03); }
+.hero-image--fallback { background: var(--gradient); border-radius: 20px; min-height: 380px; }
+
+/* Scroll indicator */
 .hero-scroll {
+  position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
   display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
   color: var(--muted); font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase;
-  opacity: 0; transition: opacity 0.6s var(--ease) 1.1s;
+  z-index: 2;
+  opacity: 0; transition: opacity 0.6s var(--ease) 1.2s;
 }
 .hero-scroll.visible { opacity: 1; }
 .scroll-line {
@@ -636,6 +666,11 @@ body.cursor-hover .cursor-follower { width: 52px; height: 52px; border-color: rg
   .navbar.scrolled { padding: 0.8rem 2rem; }
   .nav-links, .nav-cta { display: none; }
   .hamburger { display: flex; }
+  .hero-container { grid-template-columns: 1fr; text-align: center; gap: 2.5rem; }
+  .hero-text { max-width: 100%; }
+  .hero-buttons { justify-content: center; }
+  .hero-image { display: flex; justify-content: center; }
+  .hero-image img { max-width: 280px; }
   .about-grid { grid-template-columns: 1fr; gap: 3rem; }
   .about-visual { order: -1; }
   .skills-grid { grid-template-columns: repeat(2,1fr); }

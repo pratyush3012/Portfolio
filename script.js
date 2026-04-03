@@ -304,6 +304,23 @@ const $$ = sel => document.querySelectorAll(sel);
 })();
 
 /* ============================================================
+   CONTACT CARD SPOTLIGHT HOVER
+   ============================================================ */
+(function initContactSpotlight() {
+  $$('.contact-card').forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const r = card.getBoundingClientRect();
+      const x = e.clientX - r.left;
+      const y = e.clientY - r.top;
+      card.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(124,58,237,0.15), rgba(255,255,255,0.03))`;
+    });
+    card.addEventListener('mouseleave', () => {
+      card.style.background = '';
+    });
+  });
+})();
+
+/* ============================================================
    COPY EMAIL
    ============================================================ */
 function copyEmail() {

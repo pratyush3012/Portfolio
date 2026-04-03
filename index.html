@@ -380,53 +380,62 @@
   <!-- ===================== CONTACT ===================== -->
   <section class="contact section" id="contact">
     <div class="container">
-      <span class="section-label reveal-up">Get In Touch</span>
-      <h2 class="section-title reveal-up">Let's create something <span class="gradient-text">great.</span></h2>
-      <p class="section-sub reveal-up">Open to internships, freelance projects, and collaborations.</p>
-      <div class="contact-grid">
-        <div class="contact-info reveal-up">
-          <div class="contact-link" onclick="copyEmail()" role="button" tabindex="0" aria-label="Copy email address">
-            <span class="contact-icon" aria-hidden="true">📧</span>
-            <div>
-              <small>Email — click to copy</small>
-              <p id="emailText">Pratyushsharma1209@gmail.com</p>
+      <div class="contact-wrapper">
+
+        <!-- LEFT -->
+        <div class="contact-left reveal-up">
+          <span class="section-label">Get In Touch</span>
+          <h2 class="contact-title">Let's create something <span class="gradient-text">great.</span></h2>
+          <p class="contact-sub">Open to internships, freelance work, and collaborations.</p>
+
+          <div class="contact-cards">
+            <div class="contact-card" onclick="copyEmail()" role="button" tabindex="0" aria-label="Copy email">
+              <div class="card-icon" aria-hidden="true">📧</div>
+              <div>
+                <small>Email — click to copy</small>
+                <p id="emailText">Pratyushsharma1209@gmail.com</p>
+              </div>
             </div>
+            <a href="https://www.linkedin.com/in/pratyush-sharma-931786252/" target="_blank" rel="noopener" class="contact-card">
+              <div class="card-icon" aria-hidden="true">💼</div>
+              <div>
+                <small>LinkedIn</small>
+                <p>View Profile</p>
+              </div>
+            </a>
+            <a href="https://www.instagram.com/pratyush.3012?igsh=MWJhZm04b2xlZHR0Mg%3D%3D&utm_source=qr"
+               target="_blank" rel="noopener" class="contact-card">
+              <div class="card-icon" aria-hidden="true">📸</div>
+              <div>
+                <small>Instagram</small>
+                <p>@Pratyush.3012</p>
+              </div>
+            </a>
           </div>
-          <a href="https://www.linkedin.com/in/pratyush-sharma-931786252/" target="_blank" rel="noopener" class="contact-link">
-            <span class="contact-icon" aria-hidden="true">💼</span>
-            <div>
-              <small>LinkedIn</small>
-              <p>linkedin.com/in/pratyush-sharma</p>
-            </div>
-          </a>
-          <a href="https://www.instagram.com/pratyush.3012?igsh=MWJhZm04b2xlZHR0Mg%3D%3D&utm_source=qr"
-             target="_blank" rel="noopener" class="contact-link">
-            <span class="contact-icon" aria-hidden="true">📸</span>
-            <div>
-              <small>Instagram</small>
-              <p>@Pratyush.3012</p>
-            </div>
-          </a>
         </div>
 
-        <form class="contact-form reveal-up" id="contactForm" novalidate>
-          <div class="form-group">
-            <input type="text" id="fname" placeholder=" " required autocomplete="name" />
-            <label for="fname">Your Name</label>
-            <div class="input-line" aria-hidden="true"></div>
-          </div>
-          <div class="form-group">
-            <input type="email" id="femail" placeholder=" " required autocomplete="email" />
-            <label for="femail">Your Email</label>
-            <div class="input-line" aria-hidden="true"></div>
-          </div>
-          <div class="form-group">
-            <textarea id="fmsg" rows="4" placeholder=" " required></textarea>
-            <label for="fmsg">Your Message</label>
-            <div class="input-line" aria-hidden="true"></div>
-          </div>
-          <button type="submit" class="btn-primary magnetic" id="sendBtn">Send Message</button>
-        </form>
+        <!-- RIGHT -->
+        <div class="contact-right reveal-up" data-delay="0.1">
+          <form id="contactForm" class="contact-form">
+            <div class="form-group">
+              <input type="text" id="fname" required autocomplete="name" />
+              <label for="fname">Your Name</label>
+            </div>
+            <div class="form-group">
+              <input type="email" id="femail" required autocomplete="email" />
+              <label for="femail">Your Email</label>
+            </div>
+            <div class="form-group">
+              <textarea id="fmsg" rows="4" required></textarea>
+              <label for="fmsg">Your Message</label>
+            </div>
+            <button type="submit" class="send-btn magnetic" id="sendBtn">
+              <span>Send Message</span>
+              <div class="btn-glow" aria-hidden="true"></div>
+            </button>
+          </form>
+        </div>
+
       </div>
     </div>
   </section>

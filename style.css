@@ -22,7 +22,13 @@
 }
 
 html { scroll-behavior: smooth; font-size: 16px; }
-body { background: var(--bg); color: var(--text); font-family: var(--font); overflow-x: hidden; cursor: none; }
+body {
+  background: var(--bg);
+  background-image:
+    radial-gradient(ellipse 80% 50% at 20% 0%, rgba(124,58,237,0.12) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 80% 100%, rgba(37,99,235,0.1) 0%, transparent 60%);
+  color: var(--text); font-family: var(--font); overflow-x: hidden; cursor: none;
+}
 a { text-decoration: none; color: inherit; }
 ul { list-style: none; }
 
@@ -111,6 +117,8 @@ body.cursor-hover .cursor-follower { width: 52px; height: 52px; border-color: rg
 }
 .nav-link:hover { color: var(--text); }
 .nav-link:hover::after { width: 100%; }
+.nav-link.active { color: var(--text); }
+.nav-link.active::after { width: 100%; }
 .nav-cta {
   padding: 0.55rem 1.3rem; border-radius: 50px;
   background: var(--gradient); font-size: 0.85rem; font-weight: 600;
@@ -459,10 +467,16 @@ body.cursor-hover .cursor-follower { width: 52px; height: 52px; border-color: rg
 .skill-card {
   background: var(--glass); border: 1px solid var(--glass-border);
   border-radius: var(--radius); padding: 1.8rem; position: relative; overflow: hidden;
-  transition: border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+  transition: border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease), transform var(--dur) var(--ease);
   cursor: default;
 }
-.skill-card:hover { border-color: rgba(124,58,237,0.35); box-shadow: 0 8px 32px rgba(0,0,0,0.3); }
+.skill-card::before {
+  content: ''; position: absolute; inset: 0; opacity: 0; pointer-events: none;
+  background: radial-gradient(circle at var(--mx, 50%) var(--my, 0%), rgba(124,58,237,0.18), transparent 60%);
+  transition: opacity var(--dur) var(--ease);
+}
+.skill-card:hover { border-color: rgba(124,58,237,0.4); box-shadow: 0 12px 40px rgba(0,0,0,0.35); transform: translateY(-4px); }
+.skill-card:hover::before { opacity: 1; }
 .skill-card:hover .skill-glow { opacity: 1; }
 .skill-icon { font-size: 1.8rem; margin-bottom: 0.9rem; }
 .skill-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.6rem; }
@@ -495,12 +509,18 @@ body.cursor-hover .cursor-follower { width: 52px; height: 52px; border-color: rg
 .work-card:hover { transform: translateY(-5px) scale(1.01); border-color: rgba(124,58,237,0.3); box-shadow: 0 16px 48px rgba(0,0,0,0.35); }
 .work-card.hidden { display: none; }
 
-.work-card-img { overflow: hidden; }
+.work-card-img { overflow: hidden; position: relative; }
 .work-card-img img {
   width: 100%; height: 220px; object-fit: cover; display: block;
   transition: transform 0.6s var(--ease);
 }
+.work-card-img::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(11,11,15,0.7) 0%, transparent 60%);
+  opacity: 0; transition: opacity var(--dur) var(--ease);
+}
 .work-card:hover .work-card-img img { transform: scale(1.06); }
+.work-card:hover .work-card-img::after { opacity: 1; }
 
 .work-card__body { padding: 1.3rem; }
 .work-tag { font-size: 0.68rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #a78bfa; margin-bottom: 0.4rem; display: block; }
@@ -698,4 +718,64 @@ body.cursor-hover .cursor-follower { width: 52px; height: 52px; border-color: rg
   font-size: 0.68rem; padding: 4px 10px; border-radius: 999px;
   background: rgba(124,58,237,0.08); border: 1px solid rgba(124,58,237,0.2);
   color: #a78bfa; font-weight: 500;
+}
+
+/* ============================================================
+   SECTION DIVIDERS
+   ============================================================ */
+.section + .section {
+  border-top: 1px solid var(--glass-border);
+}
+
+/* ============================================================
+   ABOUT TAGS (restored)
+   ============================================================ */
+.about-tags {
+  display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.5rem; justify-content: center;
+}
+.about-tags span {
+  font-size: 0.68rem; padding: 4px 10px; border-radius: 999px;
+  background: rgba(124,58,237,0.08); border: 1px solid rgba(124,58,237,0.2);
+  color: #a78bfa; font-weight: 500;
+}
+
+/* ============================================================
+   ENHANCED SECTION LABELS
+   ============================================================ */
+.section-label {
+  display: inline-block; font-size: 0.72rem; font-weight: 600;
+  letter-spacing: 3px; text-transform: uppercase; color: #a78bfa; margin-bottom: 1rem;
+  position: relative; padding-left: 1.2rem;
+}
+.section-label::before {
+  content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%);
+  width: 6px; height: 6px; border-radius: 50%; background: #a78bfa;
+}
+
+/* ============================================================
+   WHY CARD ENHANCED
+   ============================================================ */
+.why-card {
+  width: 280px; flex-shrink: 0;
+  background: linear-gradient(135deg, rgba(124,58,237,0.06), rgba(37,99,235,0.04));
+  border: 1px solid var(--glass-border); border-radius: var(--radius); padding: 1.8rem;
+  transition: transform var(--dur) var(--ease), border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+.why-card:hover { transform: translateY(-6px); border-color: rgba(124,58,237,0.4); box-shadow: 0 16px 40px rgba(0,0,0,0.3); }
+
+/* ============================================================
+   FOOTER ENHANCED
+   ============================================================ */
+.footer {
+  padding: 2.5rem 0;
+  border-top: 1px solid var(--glass-border);
+  background: linear-gradient(to top, rgba(124,58,237,0.04), transparent);
+}
+
+/* ============================================================
+   MOBILE 640px additions
+   ============================================================ */
+@media (max-width: 640px) {
+  .orbital-system { width: 300px; height: 300px; }
+  .about-card { transform: scale(1); }
 }

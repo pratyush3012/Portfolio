@@ -24,26 +24,20 @@ const $$ = sel => document.querySelectorAll(sel);
 (function initCursor() {
   const dot = $('cursor');
   const ring = $('cursorFollower');
-  let fx = 0, fy = 0;
-
   document.addEventListener('mousemove', e => {
     dot.style.left = e.clientX + 'px';
     dot.style.top  = e.clientY + 'px';
-    // ring follows with slight lag via rAF
-    fx += (e.clientX - fx) * 0.18;
-    fy += (e.clientY - fy) * 0.18;
     ring.style.left = e.clientX + 'px';
     ring.style.top  = e.clientY + 'px';
   });
-
-  $$('a, button, .skill-card, .work-card, .masonry-item, .why-card, .contact-link').forEach(el => {
+  $$('a, button, .skill-card, .work-card, .why-card, .contact-card').forEach(el => {
     el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
     el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
   });
 })();
 
 /* ============================================================
-   SCROLL PROGRESS  (debounced via rAF)
+   SCROLL PROGRESS
    ============================================================ */
 (function initScrollProgress() {
   const bar = $('scrollProgress');
@@ -111,11 +105,7 @@ const $$ = sel => document.querySelectorAll(sel);
 })();
 
 /* ============================================================
-   TYPED TEXT  (removed — hero desc is now static)
-   ============================================================ */
-
-/* ============================================================
-   HERO PARALLAX  (debounced)
+   HERO PARALLAX
    ============================================================ */
 (function initHeroParallax() {
   const text = document.querySelector('.hero-text');
@@ -123,12 +113,10 @@ const $$ = sel => document.querySelectorAll(sel);
   window.addEventListener('scroll', () => {
     if (!ticking) {
       requestAnimationFrame(() => {
-        if (window.scrollY < window.innerHeight) {
+        if (window.scrollY < window.innerHeight && text) {
           const y = window.scrollY;
-          if (text) {
-            text.style.transform = `translateY(${y * 0.15}px)`;
-            text.style.opacity = String(1 - y / (window.innerHeight * 0.8));
-          }
+          text.style.transform = `translateY(${y * 0.15}px)`;
+          text.style.opacity = String(1 - y / (window.innerHeight * 0.8));
         }
         ticking = false;
       });
@@ -138,7 +126,7 @@ const $$ = sel => document.querySelectorAll(sel);
 })();
 
 /* ============================================================
-   SCROLL REVEAL  (IntersectionObserver)
+   SCROLL REVEAL
    ============================================================ */
 (function initReveal() {
   const obs = new IntersectionObserver(entries => {
@@ -149,12 +137,11 @@ const $$ = sel => document.querySelectorAll(sel);
       obs.unobserve(entry.target);
     });
   }, { threshold: 0.12 });
-
   $$('.reveal-up, .reveal-right').forEach(el => obs.observe(el));
 })();
 
 /* ============================================================
-   COUNTER ANIMATION  (staggered)
+   COUNTER ANIMATION (staggered)
    ============================================================ */
 (function initCounters() {
   const obs = new IntersectionObserver(entries => {
@@ -175,13 +162,12 @@ const $$ = sel => document.querySelectorAll(sel);
       obs.unobserve(entry.target);
     });
   }, { threshold: 0.5 });
-
   const stats = document.querySelector('.about-stats');
   if (stats) obs.observe(stats);
 })();
 
 /* ============================================================
-   TILT EFFECT  (subtle, only on non-touch)
+   TILT EFFECT
    ============================================================ */
 (function initTilt() {
   if (window.matchMedia('(hover: none)').matches) return;
@@ -197,48 +183,32 @@ const $$ = sel => document.querySelectorAll(sel);
 })();
 
 /* ============================================================
-   ORBITAL SYSTEM  (JS-driven true circle, labels always upright)
+   ORBITAL SYSTEM (JS true circle)
    ============================================================ */
 (function initOrbital() {
   const system = document.querySelector('.orbital-system');
   if (!system) return;
-
   const nodes = system.querySelectorAll('.orbit-node');
   const count = nodes.length;
-  const radius = 170; // px from center
-  let angle = 0;      // current rotation in radians
-  const speed = 0.0004; // radians per ms — full circle ~15.7s
-
-  // Evenly space labels around the circle
-  const offsets = Array.from({ length: count }, (_, i) =>
-    (2 * Math.PI / count) * i
-  );
-
-  const cx = system.offsetWidth  / 2;
+  const radius = 170;
+  let angle = 0;
+  const speed = 0.0004;
+  const offsets = Array.from({ length: count }, (_, i) => (2 * Math.PI / count) * i);
+  const cx = system.offsetWidth / 2;
   const cy = system.offsetHeight / 2;
-
   let last = null;
   function tick(ts) {
     if (last !== null) angle += speed * (ts - last);
     last = ts;
-
     nodes.forEach((node, i) => {
       const a = angle + offsets[i];
-      const x = cx + radius * Math.cos(a);
-      const y = cy + radius * Math.sin(a);
-      // position the node; label stays upright via translate(-50%,-50%) in CSS
-      node.style.left = x + 'px';
-      node.style.top  = y + 'px';
+      node.style.left = (cx + radius * Math.cos(a)) + 'px';
+      node.style.top  = (cy + radius * Math.sin(a)) + 'px';
     });
-
     requestAnimationFrame(tick);
   }
   requestAnimationFrame(tick);
 })();
-
-/* ============================================================
-   ORBITAL RANDOM SPEEDS  (removed — each axis has its own duration)
-   ============================================================ */
 
 /* ============================================================
    MAGNETIC BUTTONS
@@ -266,27 +236,22 @@ const $$ = sel => document.querySelectorAll(sel);
       btn.classList.add('active');
       const filter = btn.dataset.filter;
       $$('.work-card').forEach(card => {
-        const match = filter === 'all' || card.dataset.category === filter;
-        card.classList.toggle('hidden', !match);
+        card.classList.toggle('hidden', filter !== 'all' && card.dataset.category !== filter);
       });
     });
   });
 })();
 
 /* ============================================================
-   CONTACT CARD SPOTLIGHT HOVER
+   CONTACT CARD SPOTLIGHT
    ============================================================ */
 (function initContactSpotlight() {
   $$('.contact-card').forEach(card => {
     card.addEventListener('mousemove', e => {
       const r = card.getBoundingClientRect();
-      const x = e.clientX - r.left;
-      const y = e.clientY - r.top;
-      card.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(124,58,237,0.15), rgba(255,255,255,0.03))`;
+      card.style.background = `radial-gradient(circle at ${e.clientX - r.left}px ${e.clientY - r.top}px, rgba(124,58,237,0.15), rgba(255,255,255,0.03))`;
     });
-    card.addEventListener('mouseleave', () => {
-      card.style.background = '';
-    });
+    card.addEventListener('mouseleave', () => { card.style.background = ''; });
   });
 })();
 
@@ -294,12 +259,11 @@ const $$ = sel => document.querySelectorAll(sel);
    COPY EMAIL
    ============================================================ */
 function copyEmail() {
-  const email = 'Pratyushsharma1209@gmail.com';
-  navigator.clipboard.writeText(email).then(() => {
+  navigator.clipboard.writeText('Pratyushsharma1209@gmail.com').then(() => {
     const el = document.getElementById('emailText');
-    const original = el.innerText;
+    const orig = el.innerText;
     el.innerText = 'Copied ✓';
-    setTimeout(() => { el.innerText = original; }, 2000);
+    setTimeout(() => { el.innerText = orig; }, 2000);
   });
 }
 
@@ -310,15 +274,13 @@ function copyEmail() {
   const form = $('contactForm');
   const btn  = $('sendBtn');
   if (!form) return;
-
   form.addEventListener('submit', function(e) {
     e.preventDefault();
     const name    = $('fname').value.trim();
     const email   = $('femail').value.trim();
     const message = $('fmsg').value.trim();
-    const phone   = '919599071825';
-    const text    = `Hello Pratyush,%0A%0AName: ${encodeURIComponent(name)}%0AEmail: ${encodeURIComponent(email)}%0AMessage: ${encodeURIComponent(message)}`;
-    window.open(`https://wa.me/${phone}?text=${text}`, '_blank');
+    const text = `Hello Pratyush,%0A%0AName: ${encodeURIComponent(name)}%0AEmail: ${encodeURIComponent(email)}%0AMessage: ${encodeURIComponent(message)}`;
+    window.open(`https://wa.me/919599071825?text=${text}`, '_blank');
     btn.textContent = 'Opening WhatsApp…';
     setTimeout(() => { btn.textContent = 'Send Message'; form.reset(); }, 2500);
   });
@@ -335,3 +297,36 @@ $$('a[href^="#"]').forEach(a => {
     target.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
 });
+
+/* ============================================================
+   SECTION ACTIVE NAV HIGHLIGHT
+   ============================================================ */
+(function initActiveNav() {
+  const sections = $$('section[id]');
+  const navLinks = $$('.nav-link');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(l => l.classList.remove('active'));
+        const active = document.querySelector(`.nav-link[href="#${entry.target.id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { threshold: 0.4 });
+  sections.forEach(s => obs.observe(s));
+})();
+
+/* ============================================================
+   SKILL CARD SPOTLIGHT
+   ============================================================ */
+(function initSkillSpotlight() {
+  $$('.skill-card').forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const r = card.getBoundingClientRect();
+      const x = ((e.clientX - r.left) / r.width) * 100;
+      const y = ((e.clientY - r.top) / r.height) * 100;
+      card.style.setProperty('--mx', x + '%');
+      card.style.setProperty('--my', y + '%');
+    });
+  });
+})();

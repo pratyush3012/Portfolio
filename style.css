@@ -325,6 +325,7 @@ body.cursor-hover .cursor-follower { width: 52px; height: 52px; border-color: rg
    ABOUT
    ============================================================ */
 .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; align-items: center; }
+.about-text { max-width: 540px; }
 .about-desc { color: var(--muted); line-height: 1.85; margin-bottom: 1.4rem; font-size: 1rem; max-width: 520px; }
 .about-stats { display: flex; gap: 2.5rem; margin-top: 2.5rem; }
 .stat-row { display: flex; align-items: baseline; gap: 2px; }
@@ -338,16 +339,28 @@ body.cursor-hover .cursor-follower { width: 52px; height: 52px; border-color: rg
 
 /* About card */
 .about-card {
-  background: var(--glass); border: 1px solid var(--glass-border);
-  border-radius: 24px; padding: 3rem; backdrop-filter: blur(20px);
+  background: radial-gradient(circle at 30% 30%, rgba(124,58,237,0.08), rgba(0,0,0,0.4));
+  border: 1px solid var(--glass-border);
+  border-radius: 18px; padding: 1.8rem; backdrop-filter: blur(20px);
   position: relative; overflow: visible;
-  display: flex; flex-direction: column; align-items: center; gap: 2rem;
-  transition: transform 0.5s var(--ease), border-color 0.5s var(--ease), box-shadow 0.5s var(--ease);
+  display: flex; flex-direction: column; align-items: center; gap: 1.5rem;
+  transform: scale(0.92); transform-origin: right center;
+  max-width: 420px; margin-left: auto;
+  transition: border-color 0.5s var(--ease), box-shadow 0.5s var(--ease);
 }
 .about-card:hover { border-color: rgba(124,58,237,0.3); box-shadow: 0 0 40px rgba(124,58,237,0.07); }
 .about-card__glow {
-  position: absolute; inset: 0; border-radius: 24px; pointer-events: none;
+  position: absolute; inset: 0; border-radius: 18px; pointer-events: none;
   background: radial-gradient(circle at 50% 0%, rgba(124,58,237,0.08), transparent 65%);
+}
+
+.about-tags {
+  display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.5rem; justify-content: center;
+}
+.about-tags span {
+  font-size: 0.68rem; padding: 4px 10px; border-radius: 999px;
+  background: rgba(124,58,237,0.08); border: 1px solid rgba(124,58,237,0.2);
+  color: #a78bfa; font-weight: 500;
 }
 .about-avatar {
   width: 110px; height: 110px; border-radius: 50%;

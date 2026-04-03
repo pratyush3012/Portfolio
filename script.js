@@ -237,14 +237,8 @@ const $$ = sel => document.querySelectorAll(sel);
 })();
 
 /* ============================================================
-   ORBITAL RANDOM SPEEDS
+   ORBITAL RANDOM SPEEDS  (removed — each axis has its own duration)
    ============================================================ */
-(function initOrbits() {
-  $$('.orbit').forEach(orbit => {
-    const speed = Math.random() * 16 + 10; // 10–26s
-    orbit.style.animationDuration = speed + 's';
-  });
-})();
 
 /* ============================================================
    MAGNETIC BUTTONS

@@ -274,45 +274,6 @@ const $$ = sel => document.querySelectorAll(sel);
 })();
 
 /* ============================================================
-   WORK MODAL
-   ============================================================ */
-(function initWorkModal() {
-  const modal = $('workModal');
-  const overlay = $('workModalOverlay');
-  const closeBtn = $('workModalClose');
-  const modalImg = $('modalImg');
-  const modalTag = $('modalTag');
-  const modalTitle = $('modalTitle');
-  const modalDesc = $('modalDesc');
-  const modalInsight = $('modalInsight');
-  const modalLink = $('modalLink');
-
-  $$('.work-card').forEach(card => {
-    card.addEventListener('click', e => {
-      // Don't open modal if clicking the read button directly
-      if (e.target.closest('.work-read-btn')) return;
-
-      const bg = card.querySelector('.work-img-bg');
-      const c1 = bg.style.getPropertyValue('--c1');
-      const c2 = bg.style.getPropertyValue('--c2');
-      modalImg.style.background = `linear-gradient(135deg, ${c1}, ${c2})`;
-      modalTag.textContent = card.querySelector('.work-tag').textContent;
-      modalTitle.textContent = card.dataset.title;
-      modalDesc.textContent = card.dataset.desc;
-      modalInsight.textContent = '💡 ' + card.dataset.insight;
-      modalLink.href = card.dataset.link || '#';
-      modal.classList.add('open');
-      document.body.style.overflow = 'hidden';
-    });
-  });
-
-  function closeModal() { modal.classList.remove('open'); document.body.style.overflow = ''; }
-  overlay.addEventListener('click', closeModal);
-  closeBtn.addEventListener('click', closeModal);
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
-})();
-
-/* ============================================================
    SHOWCASE LIGHTBOX
    ============================================================ */
 (function initLightbox() {

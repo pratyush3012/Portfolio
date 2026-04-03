@@ -440,6 +440,7 @@ body.cursor-hover .cursor-follower { width: 52px; height: 52px; border-color: rg
 }
 .work-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 1.8rem; }
 .work-card {
+  display: block; text-decoration: none; color: inherit;
   background: var(--glass); border: 1px solid var(--glass-border);
   border-radius: var(--radius); overflow: hidden; cursor: pointer;
   transition: transform var(--dur) var(--ease), border-color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
@@ -447,78 +448,18 @@ body.cursor-hover .cursor-follower { width: 52px; height: 52px; border-color: rg
 .work-card:hover { transform: translateY(-5px) scale(1.01); border-color: rgba(124,58,237,0.3); box-shadow: 0 16px 48px rgba(0,0,0,0.35); }
 .work-card.hidden { display: none; }
 
-.work-card__img { position: relative; overflow: hidden; }
-.work-img-bg {
-  height: 210px; background: linear-gradient(135deg, var(--c1), var(--c2));
-  display: flex; align-items: center; justify-content: center;
-  transition: transform 0.7s var(--ease);
+.work-card-img { overflow: hidden; }
+.work-card-img img {
+  width: 100%; height: 220px; object-fit: cover; display: block;
+  transition: transform 0.6s var(--ease);
 }
-.work-card:hover .work-img-bg { transform: scale(1.08); }
-.work-img-label { font-size: 2.5rem; font-weight: 900; color: rgba(255,255,255,0.18); }
-
-.work-card__overlay {
-  position: absolute; inset: 0;
-  background: linear-gradient(to top, rgba(11,11,15,0.92) 0%, rgba(11,11,15,0.4) 60%, transparent 100%);
-  display: flex; flex-direction: column; justify-content: flex-end;
-  padding: 1.5rem; opacity: 0;
-  transition: opacity var(--dur) var(--ease);
-}
-.work-card:hover .work-card__overlay { opacity: 1; }
-.work-card__tag-overlay { font-size: 0.68rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #a78bfa; margin-bottom: 0.3rem; }
-.work-card__title-overlay {
-  font-size: 1.1rem; font-weight: 700; margin-bottom: 0.8rem;
-  transform: translateY(8px); transition: transform var(--dur) var(--ease);
-}
-.work-card:hover .work-card__title-overlay { transform: translateY(0); }
-.work-read-btn {
-  display: inline-block; padding: 0.55rem 1.2rem; border-radius: 50px;
-  background: var(--gradient); font-weight: 600; font-size: 0.82rem;
-  width: fit-content;
-  transform: translateY(8px); transition: transform var(--dur) var(--ease), opacity var(--dur) var(--ease);
-  opacity: 0;
-}
-.work-card:hover .work-read-btn { transform: translateY(0); opacity: 1; }
+.work-card:hover .work-card-img img { transform: scale(1.06); }
 
 .work-card__body { padding: 1.3rem; }
 .work-tag { font-size: 0.68rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: #a78bfa; margin-bottom: 0.4rem; display: block; }
 .work-card__body h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.4rem; }
 .work-card__body p { color: var(--muted); font-size: 0.875rem; line-height: 1.6; margin-bottom: 0.75rem; }
 .work-insight { font-size: 0.78rem; color: #a78bfa; font-weight: 500; }
-
-/* Work Modal */
-.work-modal {
-  position: fixed; inset: 0; z-index: 9000;
-  display: flex; align-items: center; justify-content: center;
-  opacity: 0; visibility: hidden;
-  transition: opacity 0.5s var(--ease), visibility 0.5s var(--ease);
-}
-.work-modal.open { opacity: 1; visibility: visible; }
-.work-modal__overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.88); backdrop-filter: blur(12px); }
-.work-modal__content {
-  position: relative; z-index: 1; background: var(--bg2);
-  border: 1px solid var(--glass-border); border-radius: 24px;
-  max-width: 560px; width: 92%; overflow: hidden;
-  transform: translateY(24px) scale(0.97);
-  transition: transform 0.5s var(--ease);
-}
-.work-modal.open .work-modal__content { transform: translateY(0) scale(1); }
-.modal-close {
-  position: absolute; top: 1rem; right: 1rem; z-index: 2;
-  background: var(--glass); border: 1px solid var(--glass-border);
-  color: var(--text); width: 34px; height: 34px; border-radius: 50%;
-  cursor: pointer; font-size: 0.85rem;
-  transition: background var(--dur) var(--ease), transform var(--dur) var(--ease);
-}
-.modal-close:hover { background: rgba(124,58,237,0.2); transform: rotate(90deg); }
-.modal-img { height: 220px; }
-.modal-body { padding: 1.8rem; }
-.modal-body h3 { font-size: 1.4rem; font-weight: 800; margin: 0.5rem 0 0.75rem; }
-.modal-body p { color: var(--muted); font-size: 0.95rem; line-height: 1.7; margin-bottom: 1rem; }
-.modal-insight {
-  display: inline-block; padding: 0.4rem 0.9rem; border-radius: 50px;
-  background: rgba(124,58,237,0.12); border: 1px solid rgba(124,58,237,0.25);
-  font-size: 0.8rem; color: #a78bfa; font-weight: 500; margin-bottom: 1.5rem;
-}
 
 /* ============================================================
    SHOWCASE

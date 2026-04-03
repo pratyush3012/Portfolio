@@ -345,19 +345,26 @@ body.cursor-hover .cursor-follower { width: 52px; height: 52px; border-color: rg
 @keyframes floatTag { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-7px)} }
 
 /* ============================================================
-   ORBITAL SYSTEM  (3D axes)
+   ORBITAL SYSTEM  (single ring, readable labels)
    ============================================================ */
 .orbital-system {
   position: relative; width: 320px; height: 320px;
-  perspective: 1000px;
+}
+
+/* Subtle depth glow behind the whole system */
+.orbital-system::before {
+  content: ''; position: absolute; inset: 0; border-radius: 50%;
+  background: radial-gradient(circle, rgba(124,58,237,0.1), transparent 70%);
+  filter: blur(40px); pointer-events: none;
 }
 
 .orbit-center {
   position: absolute; width: 110px; height: 110px;
-  border-radius: 50%; overflow: hidden; z-index: 5;
+  border-radius: 50%; overflow: hidden;
   top: 50%; left: 50%; transform: translate(-50%, -50%);
+  z-index: 3;
   border: 2px solid rgba(124,58,237,0.5);
-  box-shadow: 0 0 32px rgba(124,58,237,0.25);
+  box-shadow: 0 0 30px rgba(124,58,237,0.25);
   background: var(--gradient);
   display: flex; align-items: center; justify-content: center;
 }
@@ -368,33 +375,35 @@ body.cursor-hover .cursor-follower { width: 52px; height: 52px; border-color: rg
   font-size: 2rem; font-weight: 900; color: var(--text);
 }
 
-/* Orbit base — fills the container, rotates in 3D */
+/* The ring — spins continuously */
 .orbit {
-  position: absolute; width: 100%; height: 100%; top: 0; left: 0;
-  transform-style: preserve-3d;
+  position: absolute; width: 100%; height: 100%;
+  animation: orbitSpin 18s linear infinite;
 }
 
-/* 4 items evenly placed around each orbit ring */
-.orbit-item {
-  position: absolute;
+/* Each node sits at center, then translates outward via transform */
+.orbit-node {
+  position: absolute; top: 50%; left: 50%;
+  transform-origin: 0 0;
+}
+
+/* Label counter-rotates to stay upright */
+.orbit-label {
+  transform: rotate(calc(-1 * var(--angle)));
+  background: rgba(11,11,15,0.82);
+  border: 1px solid rgba(255,255,255,0.1);
   padding: 5px 13px; border-radius: 999px;
-  background: rgba(11,11,15,0.8); border: 1px solid rgba(255,255,255,0.1);
   font-size: 0.72rem; font-weight: 500;
-  backdrop-filter: blur(10px); white-space: nowrap; color: var(--text);
+  white-space: nowrap; backdrop-filter: blur(8px);
+  color: var(--text);
+  /* offset so label doesn't sit on the node point */
+  translate: -50% -50%;
 }
-.orbit-item:nth-child(1) { top: 0%;   left: 50%;  transform: translate(-50%, -50%); }
-.orbit-item:nth-child(2) { top: 50%;  left: 100%; transform: translate(-50%, -50%); }
-.orbit-item:nth-child(3) { top: 100%; left: 50%;  transform: translate(-50%, -50%); }
-.orbit-item:nth-child(4) { top: 50%;  left: 0%;   transform: translate(-50%, -50%); }
 
-/* Each ring rotates on a different axis */
-.orbit-1 { animation: orbitX 18s linear infinite; }
-.orbit-2 { animation: orbitY 22s linear infinite; }
-.orbit-3 { animation: orbitDiag 26s linear infinite; }
-
-@keyframes orbitX    { from{transform:rotateX(0deg)}   to{transform:rotateX(360deg)} }
-@keyframes orbitY    { from{transform:rotateY(0deg)}   to{transform:rotateY(360deg)} }
-@keyframes orbitDiag { from{transform:rotate3d(1,1,0,0deg)} to{transform:rotate3d(1,1,0,360deg)} }
+@keyframes orbitSpin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
 
 /* ============================================================
    SKILLS

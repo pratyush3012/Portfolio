@@ -227,8 +227,8 @@ const $$ = sel => document.querySelectorAll(sel);
   const cy = system.offsetHeight / 2;
 
   const rings = [
-    { el: system.querySelector('.orbit--inner'), radiusRatio: 0.30, speed: 0.00022, dir: 1 },
-    { el: system.querySelector('.orbit--outer'), radiusRatio: 0.48, speed: 0.00011, dir: -1 },
+    { el: system.querySelector('.orbit--inner'), radiusRatio: 0.27, speed: 0.00022, dir: 1 },
+    { el: system.querySelector('.orbit--outer'), radiusRatio: 0.50, speed: 0.00011, dir: -1 },
   ]
     .filter(r => r.el)
     .map(r => {
@@ -288,6 +288,36 @@ const EXPERIENCE = {
   const endLabel = EXPERIENCE.ongoing ? 'Present' : fmt(end);
 
   el.textContent = `${startLabel} — ${endLabel} · ${duration}`;
+})();
+
+/* ============================================================
+   EXPERIENCE STEPPER (tabs + prev/next + dots)
+   ============================================================ */
+(function initExperienceStepper() {
+  const stepper = document.querySelector('.exp-stepper');
+  if (!stepper) return;
+  const cards = Array.from(stepper.querySelectorAll('.exp-card'));
+  const tabs  = $$('.exp-tab');
+  const dots  = $$('.exp-dot');
+  const prevBtn = $('expPrev');
+  const nextBtn = $('expNext');
+  if (!cards.length) return;
+
+  let index = 0;
+
+  function show(i) {
+    index = (i + cards.length) % cards.length;
+    cards.forEach((card, ci) => card.classList.toggle('active', ci === index));
+    tabs.forEach((tab, ti) => tab.classList.toggle('active', ti === index));
+    dots.forEach((dot, di) => dot.classList.toggle('active', di === index));
+  }
+
+  tabs.forEach((tab, i) => tab.addEventListener('click', () => show(i)));
+  dots.forEach((dot, i) => dot.addEventListener('click', () => show(i)));
+  if (prevBtn) prevBtn.addEventListener('click', () => show(index - 1));
+  if (nextBtn) nextBtn.addEventListener('click', () => show(index + 1));
+
+  show(0);
 })();
 
 /* ============================================================

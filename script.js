@@ -126,6 +126,41 @@ const $$ = sel => document.querySelectorAll(sel);
 })();
 
 /* ============================================================
+   HERO — mouse parallax blobs + ambient particles
+   ============================================================ */
+(function initHeroBlobParallax() {
+  const hero = document.querySelector('.hero');
+  const layer = $('heroBlobLayer');
+  if (!hero || !layer || window.matchMedia('(hover: none), (prefers-reduced-motion: reduce)').matches) return;
+  hero.addEventListener('mousemove', e => {
+    const relX = (e.clientX / window.innerWidth - 0.5) * 40;
+    const relY = (e.clientY / window.innerHeight - 0.5) * 40;
+    layer.style.transform = `translate(${relX}px, ${relY}px)`;
+  });
+})();
+
+(function initHeroParticles() {
+  const container = $('heroParticles');
+  if (!container || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const COUNT = 18;
+  const colors = ['#a78bfa', '#60a5fa', '#f472b6'];
+  for (let i = 0; i < COUNT; i++) {
+    const p = document.createElement('span');
+    p.className = 'particle';
+    const size = 2 + Math.random() * 2.5;
+    p.style.left = Math.random() * 100 + '%';
+    p.style.top = 35 + Math.random() * 60 + '%';
+    p.style.width = size + 'px';
+    p.style.height = size + 'px';
+    p.style.background = colors[i % colors.length];
+    p.style.boxShadow = `0 0 ${size * 2}px ${colors[i % colors.length]}`;
+    p.style.animationDuration = (8 + Math.random() * 10) + 's';
+    p.style.animationDelay = (Math.random() * 10) + 's';
+    container.appendChild(p);
+  }
+})();
+
+/* ============================================================
    SCROLL REVEAL
    ============================================================ */
 (function initReveal() {
@@ -183,31 +218,76 @@ const $$ = sel => document.querySelectorAll(sel);
 })();
 
 /* ============================================================
-   ORBITAL SYSTEM (JS true circle)
+   ORBITAL SYSTEM (JS true circle — two rings, sun in the centre)
    ============================================================ */
 (function initOrbital() {
   const system = document.querySelector('.orbital-system');
   if (!system) return;
-  const nodes = system.querySelectorAll('.orbit-node');
-  const count = nodes.length;
-  const radius = 170;
-  let angle = 0;
-  const speed = 0.0004;
-  const offsets = Array.from({ length: count }, (_, i) => (2 * Math.PI / count) * i);
   const cx = system.offsetWidth / 2;
   const cy = system.offsetHeight / 2;
+
+  const rings = [
+    { el: system.querySelector('.orbit--inner'), radiusRatio: 0.30, speed: 0.00022, dir: 1 },
+    { el: system.querySelector('.orbit--outer'), radiusRatio: 0.48, speed: 0.00011, dir: -1 },
+  ]
+    .filter(r => r.el)
+    .map(r => {
+      const nodes = r.el.querySelectorAll('.orbit-node');
+      const count = nodes.length;
+      const offsets = Array.from({ length: count }, (_, i) => (2 * Math.PI / count) * i);
+      return { ...r, nodes, offsets, radius: system.offsetWidth * r.radiusRatio };
+    });
+
+  let angle = 0;
   let last = null;
   function tick(ts) {
-    if (last !== null) angle += speed * (ts - last);
+    if (last !== null) angle += (ts - last);
     last = ts;
-    nodes.forEach((node, i) => {
-      const a = angle + offsets[i];
-      node.style.left = (cx + radius * Math.cos(a)) + 'px';
-      node.style.top  = (cy + radius * Math.sin(a)) + 'px';
+    rings.forEach(r => {
+      r.nodes.forEach((node, i) => {
+        const a = r.dir * angle * r.speed + r.offsets[i];
+        node.style.left = (cx + r.radius * Math.cos(a)) + 'px';
+        node.style.top  = (cy + r.radius * Math.sin(a)) + 'px';
+      });
     });
     requestAnimationFrame(tick);
   }
   requestAnimationFrame(tick);
+})();
+
+/* ============================================================
+   EXPERIENCE DURATION (auto-counts up until marked final)
+   ============================================================ */
+const EXPERIENCE = {
+  startDate: '2026-04-01',
+  ongoing: true,
+  // When the role ends: set ongoing to false and fill in endDate ('YYYY-MM-DD')
+  // to freeze the counter instead of letting it keep counting.
+  endDate: null,
+};
+
+(function initExperienceDuration() {
+  const el = $('expPeriod');
+  if (!el) return;
+
+  const start = new Date(EXPERIENCE.startDate);
+  const end = EXPERIENCE.ongoing ? new Date() : new Date(EXPERIENCE.endDate);
+
+  let months = (end.getFullYear() - start.getFullYear()) * 12 + (end.getMonth() - start.getMonth());
+  months = Math.max(months, 0);
+
+  const yrs = Math.floor(months / 12);
+  const mos = months % 12;
+  const durationParts = [];
+  if (yrs) durationParts.push(`${yrs} yr${yrs > 1 ? 's' : ''}`);
+  if (mos || !yrs) durationParts.push(`${mos} mo${mos !== 1 ? 's' : ''}`);
+  const duration = durationParts.join(' ');
+
+  const fmt = d => d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+  const startLabel = fmt(start);
+  const endLabel = EXPERIENCE.ongoing ? 'Present' : fmt(end);
+
+  el.textContent = `${startLabel} — ${endLabel} · ${duration}`;
 })();
 
 /* ============================================================
@@ -235,8 +315,16 @@ const $$ = sel => document.querySelectorAll(sel);
       $$('.filter-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       const filter = btn.dataset.filter;
+
       $$('.work-card').forEach(card => {
-        card.classList.toggle('hidden', filter !== 'all' && card.dataset.category !== filter);
+        const show = filter === 'all' || card.dataset.category === filter;
+        if (show) {
+          card.classList.remove('hidden');
+          requestAnimationFrame(() => card.classList.remove('fade-out'));
+        } else if (!card.classList.contains('hidden')) {
+          card.classList.add('fade-out');
+          setTimeout(() => card.classList.add('hidden'), 300);
+        }
       });
     });
   });
@@ -271,9 +359,10 @@ function copyEmail() {
    CONTACT FORM → WHATSAPP
    ============================================================ */
 (function initForm() {
-  const form = $('contactForm');
-  const btn  = $('sendBtn');
-  if (!form) return;
+  const form  = $('contactForm');
+  const btn   = $('sendBtn');
+  const label = btn ? btn.querySelector('span') : null;
+  if (!form || !label) return;
   form.addEventListener('submit', function(e) {
     e.preventDefault();
     const name    = $('fname').value.trim();
@@ -281,8 +370,13 @@ function copyEmail() {
     const message = $('fmsg').value.trim();
     const text = `Hello Pratyush,%0A%0AName: ${encodeURIComponent(name)}%0AEmail: ${encodeURIComponent(email)}%0AMessage: ${encodeURIComponent(message)}`;
     window.open(`https://wa.me/919599071825?text=${text}`, '_blank');
-    btn.textContent = 'Opening WhatsApp…';
-    setTimeout(() => { btn.textContent = 'Send Message'; form.reset(); }, 2500);
+    btn.classList.add('sent');
+    label.textContent = '✓ Opening WhatsApp';
+    setTimeout(() => {
+      btn.classList.remove('sent');
+      label.textContent = 'Send Message';
+      form.reset();
+    }, 2500);
   });
 })();
 
@@ -304,16 +398,77 @@ $$('a[href^="#"]').forEach(a => {
 (function initActiveNav() {
   const sections = $$('section[id]');
   const navLinks = $$('.nav-link');
+  const wrap = document.querySelector('.nav-links-wrap');
+  const indicator = $('navIndicator');
+
+  function moveIndicator(link) {
+    if (!indicator || !wrap) return;
+    if (!link) { indicator.style.opacity = '0'; return; }
+    const wrapRect = wrap.getBoundingClientRect();
+    const linkRect = link.getBoundingClientRect();
+    indicator.style.left = (linkRect.left - wrapRect.left) + 'px';
+    indicator.style.width = linkRect.width + 'px';
+    indicator.style.opacity = '1';
+  }
+
   const obs = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         navLinks.forEach(l => l.classList.remove('active'));
         const active = document.querySelector(`.nav-link[href="#${entry.target.id}"]`);
-        if (active) active.classList.add('active');
+        if (active) {
+          active.classList.add('active');
+          moveIndicator(active);
+        } else {
+          moveIndicator(null);
+        }
       }
     });
   }, { threshold: 0.4 });
   sections.forEach(s => obs.observe(s));
+
+  if (indicator) {
+    navLinks.forEach(link => {
+      link.addEventListener('mouseenter', () => moveIndicator(link));
+      link.addEventListener('mouseleave', () => moveIndicator(document.querySelector('.nav-link.active')));
+    });
+    window.addEventListener('resize', () => moveIndicator(document.querySelector('.nav-link.active')), { passive: true });
+  }
+})();
+
+/* ============================================================
+   WHY-ME MARQUEE (auto-scroll, pauses on hover, clones for a seamless loop)
+   ============================================================ */
+(function initWhyMarquee() {
+  const wrap  = document.querySelector('.why-track-wrap');
+  const track = document.querySelector('.why-track');
+  if (!wrap || !track) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  Array.from(track.children).forEach(card => {
+    const clone = card.cloneNode(true);
+    clone.classList.remove('reveal-up');
+    clone.removeAttribute('data-delay');
+    clone.style.opacity = '';
+    clone.style.transform = '';
+    clone.setAttribute('aria-hidden', 'true');
+    track.appendChild(clone);
+  });
+
+  wrap.classList.add('auto-scroll');
+  track.classList.add('marquee');
+})();
+
+/* ============================================================
+   BACK TO TOP
+   ============================================================ */
+(function initBackToTop() {
+  const btn = $('backToTop');
+  if (!btn) return;
+  window.addEventListener('scroll', () => {
+    btn.classList.toggle('visible', window.scrollY > window.innerHeight * 0.7);
+  }, { passive: true });
+  btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 })();
 
 /* ============================================================
